@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *.iml
 .gradle
 /local.properties
@@ -49,4 +48,3 @@ captures/
 
 # Keystore files
 *.jks
->>>>>>> de972d3930d677d8584f4446f5adecede287835a
