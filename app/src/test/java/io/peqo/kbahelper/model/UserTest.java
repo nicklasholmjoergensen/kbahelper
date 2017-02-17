@@ -12,5 +12,6 @@ public class UserTest {
                 .build();
         assertEquals(1, user.getId());
         assertEquals("Nicklas", user.getFirstName());
+        assertEquals("Holm", user.getLastName());
     }
 }
