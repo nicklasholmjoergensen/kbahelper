@@ -13,9 +13,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.fragment.Home;
 import io.peqo.kbahelper.activity.fragment.PatientOverview;
+import io.peqo.kbahelper.model.DaoSession;
+import io.peqo.kbahelper.model.Patient;
+import io.peqo.kbahelper.model.PatientDao;
+import io.peqo.kbahelper.model.Requestor;
+import io.peqo.kbahelper.model.RequestorDao;
 
 ;
 
@@ -44,7 +50,6 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.content_main, new Home());
         ft.commit();
 
-        Log.d(TAG, "onCreate fired.");
     }
 
     @Override

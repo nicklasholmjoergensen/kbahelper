@@ -22,10 +22,14 @@ public class Requisition {
     private int runNum;
     private Date testTime;
 
-    @ToOne
+    private Long requestorId;
+
+    @ToOne(joinProperty = "requestorId")
     private Requestor requestor;
 
-    @ToOne
+    private Long patientId;
+
+    @ToOne(joinProperty = "patientId")
     private Patient patient;
 
     /** Used to resolve relations */
@@ -36,12 +40,15 @@ public class Requisition {
     @Generated(hash = 1825104607)
     private transient RequisitionDao myDao;
 
-    @Generated(hash = 816114082)
-    public Requisition(Long id, int reqNum, int runNum, Date testTime) {
+    @Generated(hash = 1992092101)
+    public Requisition(Long id, int reqNum, int runNum, Date testTime, Long requestorId,
+            Long patientId) {
         this.id = id;
         this.reqNum = reqNum;
         this.runNum = runNum;
         this.testTime = testTime;
+        this.requestorId = requestorId;
+        this.patientId = patientId;
     }
 
     @Generated(hash = 1662380300)
@@ -56,38 +63,38 @@ public class Requisition {
         this.id = id;
     }
 
-    @Generated(hash = 2078428731)
-    private transient boolean patient__refreshed;
+    @Generated(hash = 207025544)
+    private transient Long requestor__resolvedKey;
 
-    @Generated(hash = 690195104)
-    private transient boolean requestor__refreshed;
+    @Generated(hash = 391381774)
+    private transient Long patient__resolvedKey;
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1939769779)
+    @Generated(hash = 1923256233)
     public Patient getPatient() {
-        if (patient != null || !patient__refreshed) {
+        Long __key = this.patientId;
+        if (patient__resolvedKey == null || !patient__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             PatientDao targetDao = daoSession.getPatientDao();
-            targetDao.refresh(patient);
-            patient__refreshed = true;
+            Patient patientNew = targetDao.load(__key);
+            synchronized (this) {
+                patient = patientNew;
+                patient__resolvedKey = __key;
+            }
         }
         return patient;
     }
 
-    /** To-one relationship, returned entity is not refreshed and may carry only the PK property. */
-    @Generated(hash = 1923605878)
-    public Patient peakPatient() {
-        return patient;
-    }
-
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 194969539)
+    @Generated(hash = 459152036)
     public void setPatient(Patient patient) {
         synchronized (this) {
             this.patient = patient;
-            patient__refreshed = true;
+            patientId = patient == null ? null : patient.getId();
+            patient__resolvedKey = patientId;
         }
     }
 
@@ -151,33 +158,61 @@ public class Requisition {
         this.testTime = testTime;
     }
 
+    @Override
+    public String toString() {
+        return "Requisition{" +
+                "id=" + id +
+                ", reqNum=" + reqNum +
+                ", runNum=" + runNum +
+                ", testTime=" + testTime +
+                ", requestor=" + getRequestorId() +
+                ", patient=" + getPatientId() + '\'' +
+                '}';
+    }
+
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1454400281)
+    @Generated(hash = 1934454346)
     public Requestor getRequestor() {
-        if (requestor != null || !requestor__refreshed) {
+        Long __key = this.requestorId;
+        if (requestor__resolvedKey == null || !requestor__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             RequestorDao targetDao = daoSession.getRequestorDao();
-            targetDao.refresh(requestor);
-            requestor__refreshed = true;
+            Requestor requestorNew = targetDao.load(__key);
+            synchronized (this) {
+                requestor = requestorNew;
+                requestor__resolvedKey = __key;
+            }
         }
-        return requestor;
-    }
-
-    /** To-one relationship, returned entity is not refreshed and may carry only the PK property. */
-    @Generated(hash = 1470020448)
-    public Requestor peakRequestor() {
         return requestor;
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 595836249)
+    @Generated(hash = 143239411)
     public void setRequestor(Requestor requestor) {
         synchronized (this) {
             this.requestor = requestor;
-            requestor__refreshed = true;
+            requestorId = requestor == null ? null : requestor.getId();
+            requestor__resolvedKey = requestorId;
         }
+    }
+
+    public Long getRequestorId() {
+        return this.requestorId;
+    }
+
+    public void setRequestorId(Long requestorId) {
+        this.requestorId = requestorId;
+    }
+
+    public Long getPatientId() {
+        return this.patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
