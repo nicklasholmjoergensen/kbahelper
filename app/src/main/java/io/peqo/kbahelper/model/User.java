@@ -6,41 +6,42 @@ package io.peqo.kbahelper.model;
 
 public class User {
 
-    private final int id;
-    private final String firstName;
-    private final String lastName;
+    private int id;
+    private String firstName;
+    private String lastName;
 
-    private User(UserBuilder userBuilder) {
-        this.id = userBuilder.id;
-        this.firstName = userBuilder.firstName;
-        this.lastName = userBuilder.lastName;
-    }
-
-    public static class UserBuilder {
-        private final int id;
-        private final String firstName;
-        private final String lastName;
-
-        public UserBuilder(int id, String firstName, String lastName) {
-            this.id = id;
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-
-        public User build() {
-            return new User(this);
-        }
-    }
+    public User() { }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

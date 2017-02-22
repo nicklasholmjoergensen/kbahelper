@@ -15,12 +15,19 @@ public final class DbContract {
 
     public static class UserTable implements BaseColumns {
         public static final String TABLE_NAME = "user";
+        public static final String COLUMN_ID = "_id";
         public static final String COLUMN_FIRSTNAME = "firstname";
         public static final String COLUMN_LASTNAME = "lastname";
 
+        public static final String[] COLUMNS = {
+                COLUMN_ID,
+                COLUMN_FIRSTNAME,
+                COLUMN_LASTNAME
+        };
+
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY," +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_FIRSTNAME + " TEXT," +
                 COLUMN_LASTNAME + " TEXT)";
 
