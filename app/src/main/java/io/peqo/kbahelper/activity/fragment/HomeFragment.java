@@ -49,14 +49,12 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 Requisition req = requisitionDao.load(adapter.getItemId(position));
-                Log.d("Event", "ListView clicked: " + req.getId());
                 bundle.putLong("reqId", req.getId());
                 Fragment fragment = new RequisitionFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_main, fragment);
                 ft.commit();
-                Log.d("Event", "Requisition sample: " + req.getSamples().get(0).toString());
             }
         });
 
