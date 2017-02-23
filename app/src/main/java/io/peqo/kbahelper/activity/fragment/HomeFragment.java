@@ -56,6 +56,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_main, fragment);
                 ft.commit();
+                Log.d("Event", "Requisition sample: " + req.getSamples().get(0).toString());
             }
         });
 

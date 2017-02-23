@@ -254,5 +254,4 @@ public class Requisition {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRequisitionDao() : null;
     }
-
 }

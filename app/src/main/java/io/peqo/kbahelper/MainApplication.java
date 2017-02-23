@@ -15,6 +15,8 @@ import io.peqo.kbahelper.model.Requestor;
 import io.peqo.kbahelper.model.RequestorDao;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
+import io.peqo.kbahelper.model.Sample;
+import io.peqo.kbahelper.model.SampleDao;
 
 public class MainApplication extends Application {
 
@@ -44,6 +46,7 @@ public class MainApplication extends Application {
         PatientDao patientDao = daoSession.getPatientDao();
         RequestorDao requestorDao = daoSession.getRequestorDao();
         RequisitionDao requisitionDao = daoSession.getRequisitionDao();
+        SampleDao sampleDao = daoSession.getSampleDao();
 
         Patient patient1 = new Patient();
         patient1.setCustomerNum(11223);
@@ -84,5 +87,12 @@ public class MainApplication extends Application {
 
         requisitionDao.insert(requisition1);
         requisitionDao.insert(requisition2);
+
+        Sample sample1 = new Sample();
+        sample1.setName("Glucose");
+        sample1.setRequisitionId(requisition1.getId());
+        sampleDao.insert(sample1);
+
+        requisition1.getSamples().add(sample1);
     }
 }
