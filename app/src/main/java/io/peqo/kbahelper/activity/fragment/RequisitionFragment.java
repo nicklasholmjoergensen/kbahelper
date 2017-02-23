@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
@@ -45,9 +47,29 @@ public class RequisitionFragment extends Fragment {
         // Widgets
         TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
         TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
+        Button scanBracelet = (Button) view.findViewById(R.id.btnReqScanBracelet);
+        Button scanSample = (Button) view.findViewById(R.id.btnReqScanSample);
 
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
+
+        scanBracelet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast
+                        .makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        scanSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast
+                        .makeText(getActivity().getApplicationContext(), "Prøveglas succesfuldt scannet", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         return view;
     }

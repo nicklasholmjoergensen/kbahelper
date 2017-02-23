@@ -4,9 +4,11 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Model class for a Requisition.
@@ -31,6 +33,9 @@ public class Requisition {
 
     @ToOne(joinProperty = "patientId")
     private Patient patient;
+
+    @ToMany(referencedJoinProperty = "requisitionId")
+    private List<Sample> samples;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -213,6 +218,34 @@ public class Requisition {
 
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 931775220)
+    public List<Sample> getSamples() {
+        if (samples == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            SampleDao targetDao = daoSession.getSampleDao();
+            List<Sample> samplesNew = targetDao._queryRequisition_Samples(id);
+            synchronized (this) {
+                if (samples == null) {
+                    samples = samplesNew;
+                }
+            }
+        }
+        return samples;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 2140860406)
+    public synchronized void resetSamples() {
+        samples = null;
     }
 
     /** called by internal mechanisms, do not call yourself. */
