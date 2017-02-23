@@ -9,6 +9,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Requisition view -->
+    <string name="btnScanBracelet">Scan armbånd</string>
+    <string name="btnScanSample">Scan prøveglas</string>
+    <string name="textPatientName">Patient navn</string>
+    <string name="textPatientCpr">Patient CPR nummer</string>
+    <string name="textPatientLocation">Stue: seng:</string>
 </resources>

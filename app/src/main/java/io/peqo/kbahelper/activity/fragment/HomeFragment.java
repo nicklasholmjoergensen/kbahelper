@@ -20,9 +20,6 @@ import io.peqo.kbahelper.model.DaoSession;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
 
-/**
- * Created by Nicklas on 22-02-2017.
- */
 public class HomeFragment extends android.support.v4.app.Fragment {
 
     public static final String TAG = "Home fragment";
@@ -50,9 +47,12 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
                 Requisition req = requisitionDao.load(adapter.getItemId(position));
                 Log.d("Event", "ListView clicked: " + req.getId());
+                bundle.putLong("reqId", req.getId());
                 Fragment fragment = new RequisitionFragment();
+                fragment.setArguments(bundle);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_main, fragment);
                 ft.commit();
