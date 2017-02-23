@@ -18,17 +18,19 @@ public class Patient {
     private String lastName;
     private int customerNum;
     private String cprNum;
+    private boolean registered;
 
     public Patient() {}
 
-    @Generated(hash = 391941295)
+    @Generated(hash = 1346780186)
     public Patient(Long id, String firstName, String lastName, int customerNum,
-            String cprNum) {
+            String cprNum, boolean registered) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.customerNum = customerNum;
         this.cprNum = cprNum;
+        this.registered = registered;
     }
 
     public Long getId() {
@@ -71,6 +73,14 @@ public class Patient {
         this.lastName = lastName;
     }
 
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
     public String getFullName() {
         return firstName + " " + lastName;
     }
@@ -84,5 +94,9 @@ public class Patient {
                 ", customerNum=" + customerNum +
                 ", cprNum='" + cprNum + '\'' +
                 '}';
+    }
+
+    public boolean getRegistered() {
+        return this.registered;
     }
 }

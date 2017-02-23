@@ -14,13 +14,16 @@ public class Sample {
 
     private String name;
 
+    private boolean taken;
+
     public Sample() {}
 
-    @Generated(hash = 549334974)
-    public Sample(Long id, Long requisitionId, String name) {
+    @Generated(hash = 1687193263)
+    public Sample(Long id, Long requisitionId, String name, boolean taken) {
         this.id = id;
         this.requisitionId = requisitionId;
         this.name = name;
+        this.taken = taken;
     }
 
     public Long getId() {
@@ -47,6 +50,14 @@ public class Sample {
         this.name = name;
     }
 
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
+    }
+
     @Override
     public String toString() {
         return "Sample{" +
@@ -54,5 +65,9 @@ public class Sample {
                 ", requisitionId=" + requisitionId +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public boolean getTaken() {
+        return this.taken;
     }
 }

@@ -7,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
@@ -17,6 +21,7 @@ import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.PatientDao;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
+import io.peqo.kbahelper.model.Sample;
 
 
 public class RequisitionFragment extends Fragment {
@@ -26,6 +31,8 @@ public class RequisitionFragment extends Fragment {
 
     private Requisition requisition;
     private Patient patient;
+
+    private int count = 0;
 
     @Nullable
     @Override
@@ -44,7 +51,11 @@ public class RequisitionFragment extends Fragment {
         requisition = requisitionDao.load(reqId);
         patient = patientDao.load(requisition.getPatientId());
 
+        final List<Sample> samples = requisition.getSamples();
+        final List<TextView> textViews = new ArrayList<>();
+
         // Widgets
+        final LinearLayout samplesLayout = (LinearLayout) view.findViewById(R.id.layoutReqSamples);
         TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
         TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
         Button scanBracelet = (Button) view.findViewById(R.id.btnReqScanBracelet);
@@ -53,9 +64,23 @@ public class RequisitionFragment extends Fragment {
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
 
+        for(int i = 0; i < samples.size(); i++) {
+            final TextView sampleText = new TextView(this.getActivity());
+            sampleText.setText(samples.get(i).getName());
+            sampleText.setId(i);
+            textViews.add(sampleText);
+            samplesLayout.addView(sampleText);
+        }
+
         scanBracelet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(patient.isRegistered()) {
+                    Toast
+                            .makeText(getActivity().getApplicationContext(), "Armbånd allerede registreret", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                patient.setRegistered(true);
                 Toast
                         .makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT)
                         .show();
@@ -65,9 +90,23 @@ public class RequisitionFragment extends Fragment {
         scanSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast
-                        .makeText(getActivity().getApplicationContext(), "Prøveglas succesfuldt scannet", Toast.LENGTH_SHORT)
-                        .show();
+                if(patient.isRegistered()) {
+                    if(count < samples.size()) {
+                        samplesLayout.removeView(textViews.get(count));
+                        count++;
+                        Toast
+                                .makeText(getActivity().getApplicationContext(), "Prøveglas succesfuldt scannet", Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        Toast
+                                .makeText(getActivity().getApplicationContext(), "Alle prøveglas succesfuldt scannet", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                } else {
+                    Toast
+                            .makeText(getActivity().getApplicationContext(), "Armbånd ikke scannet.", Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
 

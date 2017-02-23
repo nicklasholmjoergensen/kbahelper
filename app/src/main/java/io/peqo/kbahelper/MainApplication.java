@@ -93,6 +93,18 @@ public class MainApplication extends Application {
         sample1.setRequisitionId(requisition1.getId());
         sampleDao.insert(sample1);
 
+        Sample sample2 = new Sample();
+        sample2.setName("Natrium");
+        sample2.setRequisitionId(requisition1.getId());
+        sampleDao.insert(sample2);
+
+        Sample sample3 = new Sample();
+        sample3.setName("Kobragift");
+        sample3.setRequisitionId(requisition2.getId());
+        sampleDao.insert(sample3);
+
         requisition1.getSamples().add(sample1);
+        requisition1.getSamples().add(sample2);
+        requisition2.getSamples().add(sample3);
     }
 }
