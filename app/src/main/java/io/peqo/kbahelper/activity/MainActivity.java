@@ -9,26 +9,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.activity.fragment.Home;
-import io.peqo.kbahelper.activity.fragment.PatientOverview;
-import io.peqo.kbahelper.model.DaoSession;
-import io.peqo.kbahelper.model.Patient;
-import io.peqo.kbahelper.model.PatientDao;
-import io.peqo.kbahelper.model.Requestor;
-import io.peqo.kbahelper.model.RequestorDao;
+import io.peqo.kbahelper.activity.fragment.HomeFragment;
+import io.peqo.kbahelper.activity.fragment.PatientOverviewFragment;
 
-;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +40,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_main, new Home());
+        ft.replace(R.id.content_main, new HomeFragment());
         ft.commit();
-
     }
 
     @Override
@@ -81,10 +73,10 @@ public class MainActivity extends AppCompatActivity
 
         switch(itemId) {
             case R.id.nav_home:
-                fragment = new Home();
+                fragment = new HomeFragment();
                 break;
             case R.id.nav_patients:
-                fragment = new PatientOverview();
+                fragment = new PatientOverviewFragment();
                 break;
         }
 
