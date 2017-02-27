@@ -24,6 +24,7 @@ import io.peqo.kbahelper.model.RequestorDao;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
 import io.peqo.kbahelper.model.Sample;
+import io.peqo.kbahelper.model.SampleDao;
 
 
 public class RequisitionFragment extends Fragment {
@@ -45,9 +46,10 @@ public class RequisitionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_requisition_single, container, false);
 
         DaoSession daoSession = ((MainApplication) getActivity().getApplication()).getDaoSession();
-        RequisitionDao requisitionDao = daoSession.getRequisitionDao();
+        final RequisitionDao requisitionDao = daoSession.getRequisitionDao();
         PatientDao patientDao = daoSession.getPatientDao();
         RequestorDao requestorDao = daoSession.getRequestorDao();
+        final SampleDao sampleDao = daoSession.getSampleDao();
 
         bundle = this.getArguments();
         reqId = bundle.getLong("reqId");
@@ -56,7 +58,10 @@ public class RequisitionFragment extends Fragment {
         patient = patientDao.load(requisition.getPatientId());
         requestor = requestorDao.load(requisition.getRequestorId());
 
-        final List<Sample> samples = requisition.getSamples();
+        final List<Sample> samples = sampleDao.queryRawCreate(
+                        "WHERE T.REQUISITION_ID = " + requisition.getId() +
+                        " AND T.TAKEN != 1"
+        ).list();
         final List<TextView> textViews = new ArrayList<>();
 
         // Widgets
@@ -108,7 +113,13 @@ public class RequisitionFragment extends Fragment {
             public void onClick(View v) {
                 if(patient.isRegistered()) {
                     if(count < samples.size()) {
+                        samples.get(count).setTaken(true);
+                        sampleDao.insertOrReplace(samples.get(count));
                         samplesLayout.removeView(textViews.get(count));
+                        if(count == samples.size() - 1) {
+                            requisition.setDone(true);
+                            requisitionDao.insertOrReplace(requisition);
+                        }
                         count++;
                     } else {
                         Toast

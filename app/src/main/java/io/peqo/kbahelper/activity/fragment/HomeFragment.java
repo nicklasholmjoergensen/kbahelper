@@ -35,7 +35,8 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         final RequisitionDao requisitionDao = daoSession.getRequisitionDao();
 
         ListView listView = (ListView) view.findViewById(R.id.requistionList);
-        final List<Requisition> requisitions = requisitionDao.loadAll();
+        final List<Requisition> requisitions = requisitionDao.queryBuilder()
+        .where(RequisitionDao.Properties.Done.eq(false)).list();
 
         final RequisitionListAdapter adapter = new RequisitionListAdapter(
                 getActivity(),
@@ -57,7 +58,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                 ft.commit();
             }
         });
-
+        Log.d(TAG, "OnCreate method fired.");
         return view;
     }
 

@@ -23,6 +23,7 @@ public class Requisition {
     private int reqNum;
     private int runNum;
     private Date testTime;
+    private boolean done;
 
     private Long requestorId;
 
@@ -45,13 +46,14 @@ public class Requisition {
     @Generated(hash = 1825104607)
     private transient RequisitionDao myDao;
 
-    @Generated(hash = 1992092101)
-    public Requisition(Long id, int reqNum, int runNum, Date testTime, Long requestorId,
+    @Generated(hash = 363386491)
+    public Requisition(Long id, int reqNum, int runNum, Date testTime, boolean done, Long requestorId,
             Long patientId) {
         this.id = id;
         this.reqNum = reqNum;
         this.runNum = runNum;
         this.testTime = testTime;
+        this.done = done;
         this.requestorId = requestorId;
         this.patientId = patientId;
     }
@@ -163,18 +165,6 @@ public class Requisition {
         this.testTime = testTime;
     }
 
-    @Override
-    public String toString() {
-        return "Requisition{" +
-                "id=" + id +
-                ", reqNum=" + reqNum +
-                ", runNum=" + runNum +
-                ", testTime=" + testTime +
-                ", requestor=" + getRequestorId() +
-                ", patient=" + getPatientId() + '\'' +
-                '}';
-    }
-
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1934454346)
     public Requestor getRequestor() {
@@ -220,6 +210,14 @@ public class Requisition {
         this.patientId = patientId;
     }
 
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
     /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
@@ -246,6 +244,25 @@ public class Requisition {
     @Generated(hash = 2140860406)
     public synchronized void resetSamples() {
         samples = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Requisition{" +
+                "id=" + id +
+                ", reqNum=" + reqNum +
+                ", runNum=" + runNum +
+                ", testTime=" + testTime +
+                ", done=" + done +
+                ", requestorId=" + requestorId +
+                ", requestor=" + requestor +
+                ", patientId=" + patientId +
+                ", patient=" + patient +
+                '}';
+    }
+
+    public boolean getDone() {
+        return this.done;
     }
 
     /** called by internal mechanisms, do not call yourself. */
