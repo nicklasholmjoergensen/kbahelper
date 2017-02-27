@@ -45,6 +45,8 @@ public class RequisitionFragment extends Fragment {
 
     // Set up widgets for Async Task
     private LinearLayout samplesLayout;
+    private LinearLayout requestorContainer;
+    private LinearLayout requestorDescription;
     private Button scanBracelet;
     private Button scanSample;
 
@@ -96,6 +98,13 @@ public class RequisitionFragment extends Fragment {
             }
         });
 
+        requestorContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleVisibility(requestorDescription);
+            }
+        });
+
         return view;
     }
 
@@ -129,6 +138,9 @@ public class RequisitionFragment extends Fragment {
         TextView requestorAddress = (TextView) view.findViewById(R.id.textReqRequestorAddress);
         TextView requestorZip = (TextView) view.findViewById(R.id.textReqRequestorZip);
         TextView requestorCountry = (TextView) view.findViewById(R.id.textReqRequestorCountry);
+        TextView requestorTitle = (TextView) view.findViewById(R.id.textReqRequestor);
+        requestorContainer = (LinearLayout) view.findViewById(R.id.layoutReqRequestorContainer);
+        requestorDescription = (LinearLayout) view.findViewById(R.id.layoutReqRequestorDesc);
 
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
@@ -137,6 +149,15 @@ public class RequisitionFragment extends Fragment {
         requestorAddress.setText(requestor.getAddress());
         requestorZip.setText(requestor.getPostalCode());
         requestorCountry.setText(requestor.getCountry());
+        requestorDescription.setVisibility(View.GONE);
+    }
+
+    private void toggleVisibility(View view) {
+        if(view.getVisibility() == View.GONE) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
     }
 
     private class PrepareUIElements extends AsyncTask<Long, Void, List<Sample>> {
