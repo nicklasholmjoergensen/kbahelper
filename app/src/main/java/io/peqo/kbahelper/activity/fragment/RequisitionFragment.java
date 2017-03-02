@@ -71,28 +71,28 @@ public class RequisitionFragment extends Fragment {
         scanBracelet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!patient.isRegistered()) {
-                    patient.setRegistered(true);
-                    Toast.makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Patient er registreret.", Toast.LENGTH_SHORT).show();
-                }
+            if(!patient.isRegistered()) {
+                patient.setRegistered(true);
+                Toast.makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Patient er registreret.", Toast.LENGTH_SHORT).show();
+            }
             }
         });
 
         scanSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(patient.isRegistered()) {
-                    if(count < samples.size()) {
-                        new UpdateSample().execute(count);
-                        count++;
-                    } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Alle prøver taget.", Toast.LENGTH_SHORT).show();
-                    }
+            if(patient.isRegistered()) {
+                if(count < samples.size()) {
+                    new UpdateSample().execute(count);
+                    count++;
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Armbånd ikke scannet.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Alle prøver taget.", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Armbånd ikke scannet.", Toast.LENGTH_SHORT).show();
+            }
             }
         });
 

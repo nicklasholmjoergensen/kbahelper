@@ -81,8 +81,8 @@ public class MainApplication extends Application {
         Requisition requisition2 = new Requisition();
         requisition2.setPatient(patient2);
         requisition2.setRequestor(requestor);
-        requisition2.setReqNum(1015);
-        requisition2.setRunNum(4);
+        requisition2.setReqNum(1021);
+        requisition2.setRunNum(6);
         requisition2.setTestTime(new Date());
 
         requisitionDao.insert(requisition1);
@@ -99,12 +99,18 @@ public class MainApplication extends Application {
         sampleDao.insert(sample2);
 
         Sample sample3 = new Sample();
-        sample3.setName("Kobragift");
-        sample3.setRequisitionId(requisition2.getId());
+        sample3.setName("Potassium");
+        sample3.setRequisitionId(requisition1.getId());
         sampleDao.insert(sample3);
+
+        Sample sample4 = new Sample();
+        sample4.setName("Sodium");
+        sample4.setRequisitionId(requisition2.getId());
+        sampleDao.insert(sample4);
 
         requisition1.getSamples().add(sample1);
         requisition1.getSamples().add(sample2);
         requisition2.getSamples().add(sample3);
+        requisition2.getSamples().add(sample4);
     }
 }
