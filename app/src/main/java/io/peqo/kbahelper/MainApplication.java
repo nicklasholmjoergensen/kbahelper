@@ -11,6 +11,8 @@ import io.peqo.kbahelper.model.Bed;
 import io.peqo.kbahelper.model.BedDao;
 import io.peqo.kbahelper.model.DaoMaster;
 import io.peqo.kbahelper.model.DaoSession;
+import io.peqo.kbahelper.model.Department;
+import io.peqo.kbahelper.model.DepartmentDao;
 import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.PatientDao;
 import io.peqo.kbahelper.model.Requestor;
@@ -53,10 +55,19 @@ public class MainApplication extends Application {
         SampleDao sampleDao = daoSession.getSampleDao();
         RoomDao roomDao = daoSession.getRoomDao();
         BedDao bedDao = daoSession.getBedDao();
+        DepartmentDao departmentDao = daoSession.getDepartmentDao();
+
+        Department dept = new Department();
+        dept.setName("KBA.Thi(THI)");
+
+        departmentDao.insert(dept);
 
         Room room = new Room();
         room.setRoomNumber(1);
+        room.setDepartmentId(dept.getId());
         roomDao.insert(room);
+
+        dept.getRooms().add(room);
 
         Bed bed1 = new Bed();
         bed1.setBedNumber(1);

@@ -18,6 +18,8 @@ public class Room {
     @Id(autoincrement = true)
     private Long id;
 
+    private Long departmentId;
+
     private int roomNumber;
 
     @ToMany(referencedJoinProperty = "roomId")
@@ -31,9 +33,10 @@ public class Room {
     @Generated(hash = 740313876)
     private transient RoomDao myDao;
 
-    @Generated(hash = 60066221)
-    public Room(Long id, int roomNumber) {
+    @Generated(hash = 990274972)
+    public Room(Long id, Long departmentId, int roomNumber) {
         this.id = id;
+        this.departmentId = departmentId;
         this.roomNumber = roomNumber;
     }
 
@@ -119,6 +122,14 @@ public class Room {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public Long getDepartmentId() {
+        return this.departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     /** called by internal mechanisms, do not call yourself. */

@@ -31,4 +31,6 @@
     <string name="icon_desc_expand_req">Expand Requisitor Icon</string>
     <string name="text_patient_room">11</string>
     <string name="text_patient_bed">2</string>
+    <string name="label_patient_dept">Afd:</string>
+    <string name="text_patient_dept">Afd:</string>
 </resources>

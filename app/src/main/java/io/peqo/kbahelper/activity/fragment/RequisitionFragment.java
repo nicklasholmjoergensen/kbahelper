@@ -24,6 +24,8 @@ import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.model.Bed;
 import io.peqo.kbahelper.model.BedDao;
 import io.peqo.kbahelper.model.DaoSession;
+import io.peqo.kbahelper.model.Department;
+import io.peqo.kbahelper.model.DepartmentDao;
 import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.PatientDao;
 import io.peqo.kbahelper.model.Requestor;
@@ -46,8 +48,6 @@ public class RequisitionFragment extends Fragment {
 
     private Requisition requisition;
     private Patient patient;
-    private Room room;
-    private Bed bed;
 
     private RequisitionDao requisitionDao;
     private SampleDao sampleDao;
@@ -126,6 +126,7 @@ public class RequisitionFragment extends Fragment {
         RequestorDao requestorDao = daoSession.getRequestorDao();
         BedDao bedDao = daoSession.getBedDao();
         RoomDao roomDao = daoSession.getRoomDao();
+        DepartmentDao departmentDao = daoSession.getDepartmentDao();
 
         Bundle bundle = this.getArguments();
         reqId = bundle.getLong("reqId");
@@ -134,10 +135,11 @@ public class RequisitionFragment extends Fragment {
 
         requisition = requisitionDao.load(reqId);
         patient = patientDao.load(requisition.getPatientId());
-        bed = bedDao.queryRawCreate(
+        Bed bed = bedDao.queryRawCreate(
                 "WHERE T.PATIENT_ID = " + patient.getId()
         ).unique();
-        room = roomDao.load(bed.getRoomId());
+        Room room = roomDao.load(bed.getRoomId());
+        Department department = departmentDao.load(room.getDepartmentId());
         Requestor requestor = requestorDao.load(requisition.getRequestorId());
 
         samplesLayout = (LinearLayout) view.findViewById(R.id.layoutReqSamples);
@@ -146,6 +148,7 @@ public class RequisitionFragment extends Fragment {
         expandRequisitor = (ImageView) view.findViewById(R.id.btnReqExpand);
         TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
         TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
+        TextView patientDept = (TextView) view.findViewById(R.id.textReqPatientDept);
         TextView patientRoom = (TextView) view.findViewById(R.id.textReqPatientRoom);
         TextView patientBed = (TextView) view.findViewById(R.id.textReqPatientBed);
         TextView requestorName = (TextView) view.findViewById(R.id.textReqRequestorName);
@@ -161,6 +164,7 @@ public class RequisitionFragment extends Fragment {
 
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
+        patientDept.setText(department.getName());
         patientRoom.setText(String.valueOf(room.getRoomNumber()));
         patientBed.setText(String.valueOf(bed.getBedNumber()));
         requestorName.setText(requestor.getName());
