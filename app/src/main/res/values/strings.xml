@@ -33,4 +33,11 @@
     <string name="text_patient_bed">2</string>
     <string name="label_patient_dept">Afd:</string>
     <string name="text_patient_dept">Afd:</string>
+    <string name="list_req_overview_title">Sample text</string>
+    <string name="list_req_overview_cpr">Subtitle</string>
+    <string name="list_req_overview_dept">Afd:</string>
+    <string name="list_req_overview_room">Stue:</string>
+    <string name="list_req_overview_room_number">11</string>
+    <string name="list_req_overview_bed">Seng:</string>
+    <string name="list_req_overview_bed_number">2</string>
 </resources>

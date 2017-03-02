@@ -7,33 +7,78 @@
                 android:paddingRight="2dp"
                 android:paddingBottom="5dp"
                 android:orientation="horizontal">
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:id="@+id/requistionListPatientName"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:text="Sample text"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:id="@+id/requistionListPatientName"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="12dp"
+                android:textSize="18sp"
+                android:text="@string/list_req_overview_title"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/requistionListPatientCpr"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_cpr"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/requistionListPatientCpr"
-            android:padding="2dp"
-            android:textColor="#000000"
-            android:text="Subtitle"
-            android:layout_marginLeft="10dp"/>
-
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewDeptLabel"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_dept"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewDept"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_dept"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewRoomLabel"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_room"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewRoom"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_room_number"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewBedLabel"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_bed"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listReqOverviewBed"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/list_req_overview_bed_number"/>
+        </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

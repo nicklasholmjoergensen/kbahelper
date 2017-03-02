@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.Requisition;
 
 public class RequisitionListAdapter extends BaseAdapter {
@@ -30,11 +30,15 @@ public class RequisitionListAdapter extends BaseAdapter {
 
         TextView patientName = (TextView) row.findViewById(R.id.requistionListPatientName);
         TextView patientCpr = (TextView) row.findViewById(R.id.requistionListPatientCpr);
+        TextView patientDept = (TextView) row.findViewById(R.id.listReqOverviewDept);
+        TextView patientRoom = (TextView) row.findViewById(R.id.listReqOverviewRoom);
+        TextView patientBed = (TextView) row.findViewById(R.id.listReqOverviewBed);
 
         Requisition requisition = mRequisitions.get(position);
+        Patient patient = requisition.getPatient();
 
-        patientName.setText(requisition.getPatient().getFirstName() + " " + requisition.getPatient().getLastName());
-        patientCpr.setText(requisition.getPatient().getCprNum());
+        patientName.setText(patient.getFullName());
+        patientCpr.setText(patient.getCprNum());
 
         return row;
     }

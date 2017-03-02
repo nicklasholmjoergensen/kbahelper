@@ -37,7 +37,6 @@ import io.peqo.kbahelper.model.RoomDao;
 import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.model.SampleDao;
 
-
 public class RequisitionFragment extends Fragment {
 
     private static final String TAG = "Requisition Fragment";
