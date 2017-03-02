@@ -75,14 +75,14 @@ public class MainApplication extends Application {
         requisition1.setPatient(patient1);
         requisition1.setRequestor(requestor);
         requisition1.setReqNum(1015);
-        requisition1.setRunNum(0004);
+        requisition1.setRunNum(4);
         requisition1.setTestTime(new Date());
 
         Requisition requisition2 = new Requisition();
         requisition2.setPatient(patient2);
         requisition2.setRequestor(requestor);
         requisition2.setReqNum(1015);
-        requisition2.setRunNum(0004);
+        requisition2.setRunNum(4);
         requisition2.setTestTime(new Date());
 
         requisitionDao.insert(requisition1);

@@ -14,8 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
@@ -120,6 +122,8 @@ public class RequisitionFragment extends Fragment {
         Bundle bundle = this.getArguments();
         reqId = bundle.getLong("reqId");
 
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy hh:mm", Locale.getDefault());
+
         requisition = requisitionDao.load(reqId);
         patient = patientDao.load(requisition.getPatientId());
         Requestor requestor = requestorDao.load(requisition.getRequestorId());
@@ -136,6 +140,9 @@ public class RequisitionFragment extends Fragment {
         TextView requestorZip = (TextView) view.findViewById(R.id.textReqRequestorZip);
         TextView requestorCountry = (TextView) view.findViewById(R.id.textReqRequestorCountry);
         TextView requestorTitle = (TextView) view.findViewById(R.id.textReqRequestor);
+        TextView requisitionDate = (TextView) view.findViewById(R.id.textReqTestDate);
+        TextView requisitionRunNumber = (TextView) view.findViewById(R.id.textReqRunNumber);
+        TextView requisitionNumber = (TextView) view.findViewById(R.id.textReqNumber);
         requestorContainer = (LinearLayout) view.findViewById(R.id.layoutReqRequestorContainer);
         requestorDescription = (LinearLayout) view.findViewById(R.id.layoutReqRequestorDesc);
 
@@ -146,10 +153,13 @@ public class RequisitionFragment extends Fragment {
         requestorAddress.setText(requestor.getAddress());
         requestorZip.setText(requestor.getPostalCode());
         requestorCountry.setText(requestor.getCountry());
+        requisitionDate.setText(df.format(requisition.getTestTime()));
+        requisitionNumber.setText(String.valueOf(requisition.getReqNum()));
+        requisitionRunNumber.setText(String.valueOf(requisition.getRunNum()));
         requestorDescription.setVisibility(View.GONE);
     }
 
-    private void toggleVisibility(View view) {
+    private void toggleVisibility(final View view) {
         if(view.getVisibility() == View.GONE) {
             expandRequisitor.setImageResource(R.drawable.ic_expand_less_black_24dp);
             view.setVisibility(View.VISIBLE);
