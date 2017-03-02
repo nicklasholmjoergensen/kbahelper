@@ -14,7 +14,8 @@
     <string name="btn_scan_sample">Scan prøveglas</string>
     <string name="text_patient_name">Patient navn</string>
     <string name="text_patient_cpr">Patient CPR nummer</string>
-    <string name="text_patient_location">Stue: seng:</string>
+    <string name="label_patient_room">Stue:</string>
+    <string name="label_patient_bed">Seng:</string>
     <string name="label_req_testdate">Dato:</string>
     <string name="text_req_testdate">01-01-2017 11:00</string>
     <string name="label_req_run_number">Løbenr.:</string>
@@ -28,4 +29,6 @@
     <string name="text_req_requisitor_zip">Postnummer By</string>
     <string name="text_req_requisitor_country">Danmark</string>
     <string name="icon_desc_expand_req">Expand Requisitor Icon</string>
+    <string name="text_patient_room">11</string>
+    <string name="text_patient_bed">2</string>
 </resources>

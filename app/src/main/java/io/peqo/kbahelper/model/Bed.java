@@ -18,8 +18,9 @@ public class Bed {
     private Long id;
 
     private Long roomId;
-
     private Long patientId;
+
+    private int bedNumber;
 
     @ToOne(joinProperty = "patientId")
     private Patient patient;
@@ -32,11 +33,12 @@ public class Bed {
     @Generated(hash = 571450465)
     private transient BedDao myDao;
 
-    @Generated(hash = 2008168197)
-    public Bed(Long id, Long roomId, Long patientId) {
+    @Generated(hash = 147995783)
+    public Bed(Long id, Long roomId, Long patientId, int bedNumber) {
         this.id = id;
         this.roomId = roomId;
         this.patientId = patientId;
+        this.bedNumber = bedNumber;
     }
 
     @Generated(hash = 191207028)
@@ -65,6 +67,14 @@ public class Bed {
 
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
+    }
+
+    public int getBedNumber() {
+        return bedNumber;
+    }
+
+    public void setBedNumber(int bedNumber) {
+        this.bedNumber = bedNumber;
     }
 
     @Generated(hash = 391381774)

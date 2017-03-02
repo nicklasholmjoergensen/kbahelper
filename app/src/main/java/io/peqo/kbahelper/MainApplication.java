@@ -7,6 +7,8 @@ import org.greenrobot.greendao.database.Database;
 
 import java.util.Date;
 
+import io.peqo.kbahelper.model.Bed;
+import io.peqo.kbahelper.model.BedDao;
 import io.peqo.kbahelper.model.DaoMaster;
 import io.peqo.kbahelper.model.DaoSession;
 import io.peqo.kbahelper.model.Patient;
@@ -15,6 +17,8 @@ import io.peqo.kbahelper.model.Requestor;
 import io.peqo.kbahelper.model.RequestorDao;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
+import io.peqo.kbahelper.model.Room;
+import io.peqo.kbahelper.model.RoomDao;
 import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.model.SampleDao;
 
@@ -47,6 +51,25 @@ public class MainApplication extends Application {
         RequestorDao requestorDao = daoSession.getRequestorDao();
         RequisitionDao requisitionDao = daoSession.getRequisitionDao();
         SampleDao sampleDao = daoSession.getSampleDao();
+        RoomDao roomDao = daoSession.getRoomDao();
+        BedDao bedDao = daoSession.getBedDao();
+
+        Room room = new Room();
+        room.setRoomNumber(1);
+        roomDao.insert(room);
+
+        Bed bed1 = new Bed();
+        bed1.setBedNumber(1);
+        bed1.setRoomId(room.getId());
+        bedDao.insert(bed1);
+
+        Bed bed2 = new Bed();
+        bed2.setBedNumber(2);
+        bed2.setRoomId(room.getId());
+        bedDao.insert(bed2);
+
+        room.getBeds().add(bed1);
+        room.getBeds().add(bed2);
 
         Patient patient1 = new Patient();
         patient1.setCustomerNum(11223);
@@ -60,6 +83,15 @@ public class MainApplication extends Application {
         patient2.setLastName("Byrresen");
         patient2.setFirstName("Tobias");
 
+        patientDao.insert(patient1);
+        patientDao.insert(patient2);
+
+        bed1.setPatientId(patient1.getId());
+        bed2.setPatientId(patient2.getId());
+
+        bedDao.insertOrReplace(bed1);
+        bedDao.insertOrReplace(bed2);
+
         Requestor requestor = new Requestor();
         requestor.setPostalCode("7700 Thisted");
         requestor.setName("M4(THI)");
@@ -67,8 +99,6 @@ public class MainApplication extends Application {
         requestor.setCountry("Danmark");
         requestor.setAddress("Højtoftevej 2");
 
-        patientDao.insert(patient1);
-        patientDao.insert(patient2);
         requestorDao.insert(requestor);
 
         Requisition requisition1 = new Requisition();

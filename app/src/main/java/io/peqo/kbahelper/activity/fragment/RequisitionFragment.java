@@ -21,6 +21,8 @@ import java.util.Locale;
 
 import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.model.Bed;
+import io.peqo.kbahelper.model.BedDao;
 import io.peqo.kbahelper.model.DaoSession;
 import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.PatientDao;
@@ -28,6 +30,8 @@ import io.peqo.kbahelper.model.Requestor;
 import io.peqo.kbahelper.model.RequestorDao;
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.model.RequisitionDao;
+import io.peqo.kbahelper.model.Room;
+import io.peqo.kbahelper.model.RoomDao;
 import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.model.SampleDao;
 
@@ -42,6 +46,8 @@ public class RequisitionFragment extends Fragment {
 
     private Requisition requisition;
     private Patient patient;
+    private Room room;
+    private Bed bed;
 
     private RequisitionDao requisitionDao;
     private SampleDao sampleDao;
@@ -118,14 +124,20 @@ public class RequisitionFragment extends Fragment {
         requisitionDao = daoSession.getRequisitionDao();
         PatientDao patientDao = daoSession.getPatientDao();
         RequestorDao requestorDao = daoSession.getRequestorDao();
+        BedDao bedDao = daoSession.getBedDao();
+        RoomDao roomDao = daoSession.getRoomDao();
 
         Bundle bundle = this.getArguments();
         reqId = bundle.getLong("reqId");
 
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy hh:mm", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault());
 
         requisition = requisitionDao.load(reqId);
         patient = patientDao.load(requisition.getPatientId());
+        bed = bedDao.queryRawCreate(
+                "WHERE T.PATIENT_ID = " + patient.getId()
+        ).unique();
+        room = roomDao.load(bed.getRoomId());
         Requestor requestor = requestorDao.load(requisition.getRequestorId());
 
         samplesLayout = (LinearLayout) view.findViewById(R.id.layoutReqSamples);
@@ -134,12 +146,13 @@ public class RequisitionFragment extends Fragment {
         expandRequisitor = (ImageView) view.findViewById(R.id.btnReqExpand);
         TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
         TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
+        TextView patientRoom = (TextView) view.findViewById(R.id.textReqPatientRoom);
+        TextView patientBed = (TextView) view.findViewById(R.id.textReqPatientBed);
         TextView requestorName = (TextView) view.findViewById(R.id.textReqRequestorName);
         TextView requestorDepartment = (TextView) view.findViewById(R.id.textReqRequestorDepartment);
         TextView requestorAddress = (TextView) view.findViewById(R.id.textReqRequestorAddress);
         TextView requestorZip = (TextView) view.findViewById(R.id.textReqRequestorZip);
         TextView requestorCountry = (TextView) view.findViewById(R.id.textReqRequestorCountry);
-        TextView requestorTitle = (TextView) view.findViewById(R.id.textReqRequestor);
         TextView requisitionDate = (TextView) view.findViewById(R.id.textReqTestDate);
         TextView requisitionRunNumber = (TextView) view.findViewById(R.id.textReqRunNumber);
         TextView requisitionNumber = (TextView) view.findViewById(R.id.textReqNumber);
@@ -148,6 +161,8 @@ public class RequisitionFragment extends Fragment {
 
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
+        patientRoom.setText(String.valueOf(room.getRoomNumber()));
+        patientBed.setText(String.valueOf(bed.getBedNumber()));
         requestorName.setText(requestor.getName());
         requestorDepartment.setText(requestor.getDepartment());
         requestorAddress.setText(requestor.getAddress());
