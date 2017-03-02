@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class RequisitionFragment extends Fragment {
     private LinearLayout requestorDescription;
     private Button scanBracelet;
     private Button scanSample;
+    private ImageView expandRequisitor;
 
     // Keep track of samples
     private int count = 0;
@@ -81,13 +83,7 @@ public class RequisitionFragment extends Fragment {
             public void onClick(View v) {
                 if(patient.isRegistered()) {
                     if(count < samples.size()) {
-                        samples.get(count).setTaken(true);
-                        sampleDao.insertOrReplace(samples.get(count));
-                        samplesLayout.removeView(cardViews.get(count));
-                        if(count == samples.size() - 1) {
-                            requisition.setDone(true);
-                            requisitionDao.insertOrReplace(requisition);
-                        }
+                        new UpdateSample().execute(count);
                         count++;
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Alle prøver taget.", Toast.LENGTH_SHORT).show();
@@ -131,6 +127,7 @@ public class RequisitionFragment extends Fragment {
         samplesLayout = (LinearLayout) view.findViewById(R.id.layoutReqSamples);
         scanBracelet = (Button) view.findViewById(R.id.btnReqScanBracelet);
         scanSample = (Button) view.findViewById(R.id.btnReqScanSample);
+        expandRequisitor = (ImageView) view.findViewById(R.id.btnReqExpand);
         TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
         TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
         TextView requestorName = (TextView) view.findViewById(R.id.textReqRequestorName);
@@ -154,8 +151,10 @@ public class RequisitionFragment extends Fragment {
 
     private void toggleVisibility(View view) {
         if(view.getVisibility() == View.GONE) {
+            expandRequisitor.setImageResource(R.drawable.ic_expand_less_black_24dp);
             view.setVisibility(View.VISIBLE);
         } else {
+            expandRequisitor.setImageResource(R.drawable.ic_expand_more_black_24dp);
             view.setVisibility(View.GONE);
         }
     }
@@ -188,6 +187,28 @@ public class RequisitionFragment extends Fragment {
                 cardViews.add(card);
                 samplesLayout.addView(card);
             }
+        }
+    }
+
+    private class UpdateSample extends AsyncTask<Integer, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            final int count = params[0];
+
+            samples.get(count).setTaken(true);
+            sampleDao.insertOrReplace(samples.get(count));
+            if(count == samples.size() - 1) {
+                requisition.setDone(true);
+                requisitionDao.insertOrReplace(requisition);
+            }
+
+            return count;
+        }
+
+        @Override
+        protected void onPostExecute(Integer count) {
+            samplesLayout.removeView(cardViews.get(count));
         }
     }
 
