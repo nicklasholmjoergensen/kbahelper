@@ -1,9 +1,9 @@
 package io.peqo.kbahelper.model;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
 /**
@@ -17,13 +17,12 @@ public class Bed {
     @Id(autoincrement = true)
     private Long id;
 
-    private Long roomId;
-    private Long patientId;
-
     private int bedNumber;
 
-    @ToOne(joinProperty = "patientId")
-    private Patient patient;
+    private Long roomId;
+
+    @ToOne(joinProperty = "roomId")
+    private Room room;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
@@ -33,12 +32,14 @@ public class Bed {
     @Generated(hash = 571450465)
     private transient BedDao myDao;
 
-    @Generated(hash = 147995783)
-    public Bed(Long id, Long roomId, Long patientId, int bedNumber) {
+    @Generated(hash = 170076450)
+    private transient Long room__resolvedKey;
+
+    @Generated(hash = 474456843)
+    public Bed(Long id, int bedNumber, Long roomId) {
         this.id = id;
-        this.roomId = roomId;
-        this.patientId = patientId;
         this.bedNumber = bedNumber;
+        this.roomId = roomId;
     }
 
     @Generated(hash = 191207028)
@@ -61,14 +62,6 @@ public class Bed {
         this.roomId = roomId;
     }
 
-    public Long getPatientId() {
-        return this.patientId;
-    }
-
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
-    }
-
     public int getBedNumber() {
         return bedNumber;
     }
@@ -77,35 +70,32 @@ public class Bed {
         this.bedNumber = bedNumber;
     }
 
-    @Generated(hash = 391381774)
-    private transient Long patient__resolvedKey;
-
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1923256233)
-    public Patient getPatient() {
-        Long __key = this.patientId;
-        if (patient__resolvedKey == null || !patient__resolvedKey.equals(__key)) {
+    @Generated(hash = 422076784)
+    public Room getRoom() {
+        Long __key = this.roomId;
+        if (room__resolvedKey == null || !room__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            PatientDao targetDao = daoSession.getPatientDao();
-            Patient patientNew = targetDao.load(__key);
+            RoomDao targetDao = daoSession.getRoomDao();
+            Room roomNew = targetDao.load(__key);
             synchronized (this) {
-                patient = patientNew;
-                patient__resolvedKey = __key;
+                room = roomNew;
+                room__resolvedKey = __key;
             }
         }
-        return patient;
+        return room;
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 459152036)
-    public void setPatient(Patient patient) {
+    @Generated(hash = 1580335853)
+    public void setRoom(Room room) {
         synchronized (this) {
-            this.patient = patient;
-            patientId = patient == null ? null : patient.getId();
-            patient__resolvedKey = patientId;
+            this.room = room;
+            roomId = room == null ? null : room.getId();
+            room__resolvedKey = roomId;
         }
     }
 

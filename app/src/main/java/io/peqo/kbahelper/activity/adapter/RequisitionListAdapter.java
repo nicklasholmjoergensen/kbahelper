@@ -11,8 +11,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.model.Bed;
+import io.peqo.kbahelper.model.Department;
 import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.Requisition;
+import io.peqo.kbahelper.model.Room;
 
 public class RequisitionListAdapter extends BaseAdapter {
 
@@ -36,9 +39,15 @@ public class RequisitionListAdapter extends BaseAdapter {
 
         Requisition requisition = mRequisitions.get(position);
         Patient patient = requisition.getPatient();
+        Bed bed = patient.getBed();
+        Room room = bed.getRoom();
+        Department dept = room.getDepartment();
 
         patientName.setText(patient.getFullName());
         patientCpr.setText(patient.getCprNum());
+        patientBed.setText(String.valueOf(bed.getBedNumber()));
+        patientRoom.setText(String.valueOf(room.getRoomNumber()));
+        patientDept.setText(dept.getName());
 
         return row;
     }

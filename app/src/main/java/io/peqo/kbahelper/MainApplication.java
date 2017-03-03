@@ -94,14 +94,11 @@ public class MainApplication extends Application {
         patient2.setLastName("Byrresen");
         patient2.setFirstName("Tobias");
 
+        patient1.setBedId(bed1.getId());
+        patient2.setBedId(bed2.getId());
+
         patientDao.insert(patient1);
         patientDao.insert(patient2);
-
-        bed1.setPatientId(patient1.getId());
-        bed2.setPatientId(patient2.getId());
-
-        bedDao.insertOrReplace(bed1);
-        bedDao.insertOrReplace(bed2);
 
         Requestor requestor = new Requestor();
         requestor.setPostalCode("7700 Thisted");

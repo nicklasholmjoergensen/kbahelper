@@ -134,9 +134,7 @@ public class RequisitionFragment extends Fragment {
 
         requisition = requisitionDao.load(reqId);
         patient = patientDao.load(requisition.getPatientId());
-        Bed bed = bedDao.queryRawCreate(
-                "WHERE T.PATIENT_ID = " + patient.getId()
-        ).unique();
+        Bed bed = bedDao.load(patient.getBedId());
         Room room = roomDao.load(bed.getRoomId());
         Department department = departmentDao.load(room.getDepartmentId());
         Requestor requestor = requestorDao.load(requisition.getRequestorId());

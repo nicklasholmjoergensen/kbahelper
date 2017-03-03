@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.ToMany;
+import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.List;
 
@@ -17,10 +18,12 @@ public class Room {
 
     @Id(autoincrement = true)
     private Long id;
+    private int roomNumber;
 
     private Long departmentId;
 
-    private int roomNumber;
+    @ToOne(joinProperty = "departmentId")
+    private Department department;
 
     @ToMany(referencedJoinProperty = "roomId")
     private List<Bed> beds;
@@ -32,12 +35,14 @@ public class Room {
     /** Used for active entity operations. */
     @Generated(hash = 740313876)
     private transient RoomDao myDao;
+    @Generated(hash = 340684718)
+    private transient Long department__resolvedKey;
 
-    @Generated(hash = 990274972)
-    public Room(Long id, Long departmentId, int roomNumber) {
+    @Generated(hash = 1538932540)
+    public Room(Long id, int roomNumber, Long departmentId) {
         this.id = id;
-        this.departmentId = departmentId;
         this.roomNumber = roomNumber;
+        this.departmentId = departmentId;
     }
 
     @Generated(hash = 703125385)
@@ -130,6 +135,35 @@ public class Room {
 
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
+    }
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 1998261213)
+    public Department getDepartment() {
+        Long __key = this.departmentId;
+        if (department__resolvedKey == null || !department__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            DepartmentDao targetDao = daoSession.getDepartmentDao();
+            Department departmentNew = targetDao.load(__key);
+            synchronized (this) {
+                department = departmentNew;
+                department__resolvedKey = __key;
+            }
+        }
+        return department;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 2010443684)
+    public void setDepartment(Department department) {
+        synchronized (this) {
+            this.department = department;
+            departmentId = department == null ? null : department.getId();
+            department__resolvedKey = departmentId;
+        }
     }
 
     /** called by internal mechanisms, do not call yourself. */
