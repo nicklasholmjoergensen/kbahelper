@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.peqo.kbahelper.MainApplication;
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.model.Bed;
@@ -55,12 +58,27 @@ public class RequisitionFragment extends Fragment {
     private LinearLayout samplesLayout;
     private LinearLayout requestorContainer;
     private LinearLayout requestorDescription;
-    private Button scanBracelet;
     private Button scanSample;
     private ImageView expandRequisitor;
 
     // Keep track of samples
     private int count = 0;
+
+    // Bind views
+    @BindView(R.id.btnReqScanBracelet) Button scanBracelet;
+    @BindView(R.id.textReqPatientName) TextView patientName;
+    @BindView(R.id.textReqPatientCpr) TextView patientCpr;
+    @BindView(R.id.textReqPatientDept) TextView patientDept;
+    @BindView(R.id.textReqPatientRoom) TextView patientRoom;
+    @BindView(R.id.textReqPatientBed) TextView patientBed;
+    @BindView(R.id.textReqRequestorName) TextView requestorName;
+    @BindView(R.id.textReqRequestorDepartment) TextView requestorDepartment;
+    @BindView(R.id.textReqRequestorAddress) TextView requestorAddress;
+    @BindView(R.id.textReqRequestorZip) TextView requestorZip;
+    @BindView(R.id.textReqRequestorCountry) TextView requestorCountry;
+    @BindView(R.id.textReqTestDate) TextView requisitionDate;
+    @BindView(R.id.textReqRunNumber) TextView requisitionRunNumber;
+    @BindView(R.id.textReqNumber) TextView requisitionNumber;
 
     @Nullable
     @Override
@@ -68,47 +86,39 @@ public class RequisitionFragment extends Fragment {
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_requisition_single, container, false);
-
+        ButterKnife.bind(this, view);
         setup(view);
-
         new PrepareUIElements().execute(requisition.getId());
-
-        scanBracelet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            if(!patient.isRegistered()) {
-                patient.setRegistered(true);
-                Toast.makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Patient er registreret.", Toast.LENGTH_SHORT).show();
-            }
-            }
-        });
-
-        scanSample.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            if(patient.isRegistered()) {
-                if(count < samples.size()) {
-                    new UpdateSample().execute(count);
-                    count++;
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Alle prøver taget.", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(getActivity().getApplicationContext(), "Armbånd ikke scannet.", Toast.LENGTH_SHORT).show();
-            }
-            }
-        });
-
-        requestorContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggleVisibility(requestorDescription);
-            }
-        });
-
         return view;
+    }
+
+    @OnClick(R.id.btnReqScanSample)
+    public void scanSample() {
+        if(patient.isRegistered()) {
+            if(count < samples.size()) {
+                new UpdateSample().execute(count);
+                count++;
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Alle prøver taget.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Armbånd ikke scannet.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.btnReqScanBracelet)
+    public void scanBracelet() {
+        if(!patient.isRegistered()) {
+            patient.setRegistered(true);
+            Toast.makeText(getActivity().getApplicationContext(), "Armbånd succesfuldt scannet", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), "Patient er registreret.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.layoutReqRequestorContainer)
+    public void toggleRequestorInfo() {
+        toggleVisibility(requestorDescription);
     }
 
     @Override
@@ -140,22 +150,8 @@ public class RequisitionFragment extends Fragment {
         Requestor requestor = requestorDao.load(requisition.getRequestorId());
 
         samplesLayout = (LinearLayout) view.findViewById(R.id.layoutReqSamples);
-        scanBracelet = (Button) view.findViewById(R.id.btnReqScanBracelet);
         scanSample = (Button) view.findViewById(R.id.btnReqScanSample);
         expandRequisitor = (ImageView) view.findViewById(R.id.btnReqExpand);
-        TextView patientName = (TextView) view.findViewById(R.id.textReqPatientName);
-        TextView patientCpr = (TextView) view.findViewById(R.id.textReqPatientCpr);
-        TextView patientDept = (TextView) view.findViewById(R.id.textReqPatientDept);
-        TextView patientRoom = (TextView) view.findViewById(R.id.textReqPatientRoom);
-        TextView patientBed = (TextView) view.findViewById(R.id.textReqPatientBed);
-        TextView requestorName = (TextView) view.findViewById(R.id.textReqRequestorName);
-        TextView requestorDepartment = (TextView) view.findViewById(R.id.textReqRequestorDepartment);
-        TextView requestorAddress = (TextView) view.findViewById(R.id.textReqRequestorAddress);
-        TextView requestorZip = (TextView) view.findViewById(R.id.textReqRequestorZip);
-        TextView requestorCountry = (TextView) view.findViewById(R.id.textReqRequestorCountry);
-        TextView requisitionDate = (TextView) view.findViewById(R.id.textReqTestDate);
-        TextView requisitionRunNumber = (TextView) view.findViewById(R.id.textReqRunNumber);
-        TextView requisitionNumber = (TextView) view.findViewById(R.id.textReqNumber);
         requestorContainer = (LinearLayout) view.findViewById(R.id.layoutReqRequestorContainer);
         requestorDescription = (LinearLayout) view.findViewById(R.id.layoutReqRequestorDesc);
 
