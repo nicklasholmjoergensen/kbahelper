@@ -51,9 +51,6 @@ public class RequisitionFragment extends Fragment {
     private Requisition requisition;
     private Patient patient;
 
-    private RequisitionDao requisitionDao;
-    private SampleDao sampleDao;
-
     // Set up widgets for Async Task
     private LinearLayout samplesLayout;
     private LinearLayout requestorContainer;
@@ -128,15 +125,6 @@ public class RequisitionFragment extends Fragment {
     }
 
     private void setup(View view) {
-        DaoSession daoSession = ((MainApplication) getActivity().getApplication()).getDaoSession();
-        sampleDao = daoSession.getSampleDao();
-        requisitionDao = daoSession.getRequisitionDao();
-        PatientDao patientDao = daoSession.getPatientDao();
-        RequestorDao requestorDao = daoSession.getRequestorDao();
-        BedDao bedDao = daoSession.getBedDao();
-        RoomDao roomDao = daoSession.getRoomDao();
-        DepartmentDao departmentDao = daoSession.getDepartmentDao();
-
         Bundle bundle = this.getArguments();
         reqId = bundle.getLong("reqId");
 
