@@ -62,4 +62,14 @@ public class Requisition {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Requisition{" +
+                "id=" + id +
+                ", reqNum=" + reqNum +
+                ", runNum=" + runNum +
+                ", testTime=" + testTime +
+                ", done=" + done +
+                '}';
+    }
 }

@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
-import io.peqo.kbahelper.activity.fragment.PatientOverviewFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -76,9 +75,6 @@ public class MainActivity extends AppCompatActivity
         switch(itemId) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
-                break;
-            case R.id.nav_patients:
-                fragment = new PatientOverviewFragment();
                 break;
         }
 

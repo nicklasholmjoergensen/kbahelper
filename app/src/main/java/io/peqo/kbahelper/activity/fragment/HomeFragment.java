@@ -3,21 +3,19 @@ package io.peqo.kbahelper.activity.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.activity.adapter.RequisitionListAdapter;
 import io.peqo.kbahelper.model.Requisition;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,22 +25,17 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
     public static final String TAG = "Home fragment";
 
+    @BindView(R.id.requisitionList) ListView requisitionList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
 
-        ListView listView = (ListView) view.findViewById(R.id.requistionList);
-        final List<Requisition> requisitions = requisitionDao.queryBuilder()
-        .where(RequisitionDao.Properties.Done.eq(false)).list();
-
-        final RequisitionListAdapter adapter = new RequisitionListAdapter(
-                getActivity(),
-                requisitions
-        );
-
+        /*
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +51,11 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                 ft.commit();
             }
         });
+        */
         Log.d(TAG, "OnCreate method fired.");
+
+        new RetrieveRequisitions().execute();
+
         return view;
     }
 
@@ -75,10 +72,12 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             final OkHttpClient client = new OkHttpClient();
             final Gson gson = new Gson();
             Request request = new Request.Builder()
-                    .url("http://207.154.199.94/api/req")
+                    .url("http://207.154.199.94/api/req/1")
                     .build();
             try {
                 Response response = client.newCall(request).execute();
+                Requisition req = gson.fromJson(response.body().charStream(), Requisition.class);
+                Log.d(TAG, req.toString());
             } catch(Exception e) {
                 Log.d(TAG, "Error: " + e);
             }
