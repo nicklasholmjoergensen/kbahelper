@@ -79,8 +79,20 @@ public class MainApplication extends Application {
         bed2.setRoomId(room.getId());
         bedDao.insert(bed2);
 
+        Bed bed3 = new Bed();
+        bed3.setBedNumber(3);
+        bed3.setRoomId(room.getId());
+        bedDao.insert(bed3);
+
+        Bed bed4 = new Bed();
+        bed4.setBedNumber(4);
+        bed4.setRoomId(room.getId());
+        bedDao.insert(bed4);
+
         room.getBeds().add(bed1);
         room.getBeds().add(bed2);
+        room.getBeds().add(bed3);
+        room.getBeds().add(bed4);
 
         Patient patient1 = new Patient();
         patient1.setCustomerNum(11223);
@@ -89,16 +101,32 @@ public class MainApplication extends Application {
         patient1.setFirstName("Nicklas");
 
         Patient patient2 = new Patient();
-        patient2.setCustomerNum(11223);
+        patient2.setCustomerNum(11222);
         patient2.setCprNum("010101-0101");
         patient2.setLastName("Byrresen");
         patient2.setFirstName("Tobias");
 
+        Patient patient3 = new Patient();
+        patient3.setCustomerNum(15223);
+        patient3.setCprNum("220171-4433");
+        patient3.setLastName("Pedersen");
+        patient3.setFirstName("Helle");
+
+        Patient patient4 = new Patient();
+        patient4.setCustomerNum(15223);
+        patient4.setCprNum("121088-2313");
+        patient4.setLastName("Hansen");
+        patient4.setFirstName("Torben");
+
         patient1.setBedId(bed1.getId());
         patient2.setBedId(bed2.getId());
+        patient3.setBedId(bed3.getId());
+        patient4.setBedId(bed4.getId());
 
         patientDao.insert(patient1);
         patientDao.insert(patient2);
+        patientDao.insert(patient3);
+        patientDao.insert(patient4);
 
         Requestor requestor = new Requestor();
         requestor.setPostalCode("7700 Thisted");
@@ -123,8 +151,24 @@ public class MainApplication extends Application {
         requisition2.setRunNum(6);
         requisition2.setTestTime(new Date());
 
+        Requisition requisition3 = new Requisition();
+        requisition3.setPatient(patient3);
+        requisition3.setRequestor(requestor);
+        requisition3.setReqNum(1022);
+        requisition3.setRunNum(7);
+        requisition3.setTestTime(new Date());
+
+        Requisition requisition4 = new Requisition();
+        requisition4.setPatient(patient4);
+        requisition4.setRequestor(requestor);
+        requisition4.setReqNum(1023);
+        requisition4.setRunNum(9);
+        requisition4.setTestTime(new Date());
+
         requisitionDao.insert(requisition1);
         requisitionDao.insert(requisition2);
+        requisitionDao.insert(requisition3);
+        requisitionDao.insert(requisition4);
 
         Sample sample1 = new Sample();
         sample1.setName("Glucose");
@@ -146,9 +190,39 @@ public class MainApplication extends Application {
         sample4.setRequisitionId(requisition2.getId());
         sampleDao.insert(sample4);
 
+        Sample sample5 = new Sample();
+        sample5.setName("Natrium");
+        sample5.setRequisitionId(requisition3.getId());
+        sampleDao.insert(sample5);
+
+        Sample sample6 = new Sample();
+        sample6.setName("Sodium");
+        sample6.setRequisitionId(requisition3.getId());
+        sampleDao.insert(sample6);
+
+        Sample sample7 = new Sample();
+        sample7.setName("Glucose");
+        sample7.setRequisitionId(requisition4.getId());
+        sampleDao.insert(sample7);
+
+        Sample sample8 = new Sample();
+        sample8.setName("Ion");
+        sample8.setRequisitionId(requisition4.getId());
+        sampleDao.insert(sample8);
+
+        Sample sample9 = new Sample();
+        sample9.setName("Sodium");
+        sample9.setRequisitionId(requisition4.getId());
+        sampleDao.insert(sample9);
+
         requisition1.getSamples().add(sample1);
         requisition1.getSamples().add(sample2);
-        requisition2.getSamples().add(sample3);
+        requisition1.getSamples().add(sample3);
         requisition2.getSamples().add(sample4);
+        requisition3.getSamples().add(sample5);
+        requisition3.getSamples().add(sample6);
+        requisition4.getSamples().add(sample7);
+        requisition4.getSamples().add(sample8);
+        requisition4.getSamples().add(sample9);
     }
 }
