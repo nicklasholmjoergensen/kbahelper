@@ -21,8 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.adapter.RequisitionListAdapter;
-import io.peqo.kbahelper.model.Patient;
-import io.peqo.kbahelper.model.Requisition;
+import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -71,11 +70,11 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         getActivity().setTitle("Hjem");
     }
 
-    private class RetrieveRequisitions extends AsyncTask<Void, Void, List<Requisition>> {
+    private class RetrieveRequisitions extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
 
         @Override
-        protected List<Requisition> doInBackground(Void... voids) {
-            List<Requisition> requisitions = new ArrayList<>();
+        protected List<RequisitionListWrapper> doInBackground(Void... voids) {
+            List<RequisitionListWrapper> requisitions = new ArrayList<>();
             final OkHttpClient client = new OkHttpClient();
             final Gson gson = new Gson();
             Request request = new Request.Builder()
@@ -84,27 +83,21 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             try {
                 Response response = client.newCall(request).execute();
                 String responseData = response.body().string();
-                JSONObject json = new JSONObject(responseData);
-                JSONArray jsonArray = json.getJSONArray("requisitions");
+                JSONArray jsonArray = new JSONArray(responseData);
                 for(int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    JSONObject patient = jsonObject.getJSONObject("patient");
-                    Patient p = new Patient.Builder()
-                            .setId(patient.getLong("id"))
-                            .setFirstName(patient.getString("first_name"))
-                            .setLastName(patient.getString("last_name"))
-                            .setCprNum(patient.getString("cpr_num"))
-                            .setRegistered(false)
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    RequisitionListWrapper wrapper = new RequisitionListWrapper.Builder()
+                            .setId(obj.getLong("id"))
+                            .setFirstName(obj.getString("first_name"))
+                            .setLastName(obj.getString("last_name"))
+                            .setCprNum(obj.getString("cpr_num"))
+                            .setDeptName(obj.getString("dept_name"))
+                            .setRoomNumber(obj.getInt("room_number"))
+                            .setBedNumber(obj.getInt("bed_number"))
                             .build();
-                    Requisition r = new Requisition.Builder()
-                            .setId(jsonObject.getLong("id"))
-                            .setReqNum(jsonObject.getInt("req_num"))
-                            .setRunNum(jsonObject.getInt("run_num"))
-                            .setDone(false)
-                            .setPatient(p)
-                            .build();
-                    requisitions.add(r);
+                    requisitions.add(wrapper);
                 }
+                Log.d(TAG, jsonArray.toString());
             } catch(Exception e) {
                 Log.d(TAG, "Error: " + e);
             }
@@ -113,7 +106,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         }
 
         @Override
-        protected void onPostExecute(List<Requisition> requisitions) {
+        protected void onPostExecute(List<RequisitionListWrapper> requisitions) {
             requisitionList.setAdapter(new RequisitionListAdapter(getActivity(), requisitions));
         }
     }

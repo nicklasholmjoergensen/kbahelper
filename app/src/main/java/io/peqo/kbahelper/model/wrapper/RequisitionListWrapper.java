@@ -1,4 +1,4 @@
-package io.peqo.kbahelper.model;
+package io.peqo.kbahelper.model.wrapper;
 
 /**
  * Wrapper class used only for displaying requisition and patient info
@@ -7,31 +7,40 @@ package io.peqo.kbahelper.model;
 
 public class RequisitionListWrapper {
 
+    public final Long id;
     public final String firstName;
     public final String lastName;
     public final String cprNum;
-    public final String department;
-    public final int room;
-    public final int bed;
+    public final String deptName;
+    public final int roomNumber;
+    public final int bedNumber;
 
     private RequisitionListWrapper(Builder builder) {
+        this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.cprNum = builder.cprNum;
-        this.department = builder.department;
-        this.room = builder.room;
-        this.bed = builder.bed;
+        this.deptName = builder.deptName;
+        this.roomNumber = builder.roomNumber;
+        this.bedNumber = builder.bedNumber;
     }
 
     public static class Builder {
+
+        private Long id;
         private String firstName;
         private String lastName;
         private String cprNum;
-        private String department;
-        private int room;
-        private int bed;
+        private String deptName;
+        private int roomNumber;
+        private int bedNumber;
 
         public Builder() {}
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
@@ -48,18 +57,18 @@ public class RequisitionListWrapper {
             return this;
         }
 
-        public Builder setDepartment(String department) {
-            this.department = department;
+        public Builder setDeptName(String deptName) {
+            this.deptName = deptName;
             return this;
         }
 
-        public Builder setRoom(int room) {
-            this.room = room;
+        public Builder setRoomNumber(int roomNumber) {
+            this.roomNumber = roomNumber;
             return this;
         }
 
-        public Builder setBed(int bed) {
-            this.bed = bed;
+        public Builder setBedNumber(int bedNumber) {
+            this.bedNumber = bedNumber;
             return this;
         }
 

@@ -1,7 +1,7 @@
 package io.peqo.kbahelper.model;
 
 /**
- * Class modelling the department requesting the bloodwork.
+ * Class modelling the dept_name requesting the bloodwork.
  */
 
 public class Requestor {

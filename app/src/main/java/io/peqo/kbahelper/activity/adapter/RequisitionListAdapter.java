@@ -13,13 +13,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.model.Patient;
-import io.peqo.kbahelper.model.Requisition;
+import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
 
 public class RequisitionListAdapter extends BaseAdapter {
 
     private Context c;
-    private List<Requisition> requisitions;
+    private List<RequisitionListWrapper> requisitions;
 
     @BindView(R.id.requistionListPatientName) TextView patientName;
     @BindView(R.id.requistionListPatientCpr) TextView patientCpr;
@@ -27,7 +26,7 @@ public class RequisitionListAdapter extends BaseAdapter {
     @BindView(R.id.listReqOverviewRoom) TextView patientRoom;
     @BindView(R.id.listReqOverviewBed) TextView patientBed;
 
-    public RequisitionListAdapter(Context context, List<Requisition> requisitions) {
+    public RequisitionListAdapter(Context context, List<RequisitionListWrapper> requisitions) {
         this.c = context;
         this.requisitions = requisitions;
     }
@@ -37,11 +36,13 @@ public class RequisitionListAdapter extends BaseAdapter {
         View row = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
         ButterKnife.bind(this, row);
 
-        Requisition requisition = requisitions.get(position);
-        Patient patient = requisition.patient;
+        RequisitionListWrapper wrapper = requisitions.get(position);
 
-        patientName.setText(patient.firstName);
-        patientCpr.setText(patient.cprNum);
+        patientName.setText(wrapper.firstName + " " + wrapper.lastName);
+        patientCpr.setText(wrapper.cprNum);
+        patientDept.setText(wrapper.deptName);
+        patientRoom.setText(String.valueOf(wrapper.roomNumber));
+        patientBed.setText(String.valueOf(wrapper.bedNumber));
 
         return row;
     }
@@ -58,6 +59,6 @@ public class RequisitionListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(null);
+        return requisitions.get(position).id;
     }
 }

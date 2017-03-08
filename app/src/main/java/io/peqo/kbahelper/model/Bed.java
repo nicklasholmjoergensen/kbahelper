@@ -1,7 +1,7 @@
 package io.peqo.kbahelper.model;
 
 /**
- * Class representing a bed, which has a many-to-one relationship with a Room,
+ * Class representing a bedNumber, which has a many-to-one relationship with a Room,
  * and a one-to-one relationship with a Patient.
  */
 
