@@ -11,11 +11,17 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.activity.adapter.RequisitionListAdapter;
+import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.Requisition;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -69,20 +75,46 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected List<Requisition> doInBackground(Void... voids) {
+            List<Requisition> requisitions = new ArrayList<>();
             final OkHttpClient client = new OkHttpClient();
             final Gson gson = new Gson();
             Request request = new Request.Builder()
-                    .url("http://207.154.199.94/api/req/1")
+                    .url("http://207.154.199.94/api/req")
                     .build();
             try {
                 Response response = client.newCall(request).execute();
-                Requisition req = gson.fromJson(response.body().charStream(), Requisition.class);
-                Log.d(TAG, req.toString());
+                String responseData = response.body().string();
+                JSONObject json = new JSONObject(responseData);
+                JSONArray jsonArray = json.getJSONArray("requisitions");
+                for(int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    JSONObject patient = jsonObject.getJSONObject("patient");
+                    Patient p = new Patient.Builder()
+                            .setId(patient.getLong("id"))
+                            .setFirstName(patient.getString("first_name"))
+                            .setLastName(patient.getString("last_name"))
+                            .setCprNum(patient.getString("cpr_num"))
+                            .setRegistered(false)
+                            .build();
+                    Requisition r = new Requisition.Builder()
+                            .setId(jsonObject.getLong("id"))
+                            .setReqNum(jsonObject.getInt("req_num"))
+                            .setRunNum(jsonObject.getInt("run_num"))
+                            .setDone(false)
+                            .setPatient(p)
+                            .build();
+                    requisitions.add(r);
+                }
             } catch(Exception e) {
                 Log.d(TAG, "Error: " + e);
             }
 
-            return null;
+            return requisitions;
+        }
+
+        @Override
+        protected void onPostExecute(List<Requisition> requisitions) {
+            requisitionList.setAdapter(new RequisitionListAdapter(getActivity(), requisitions));
         }
     }
 

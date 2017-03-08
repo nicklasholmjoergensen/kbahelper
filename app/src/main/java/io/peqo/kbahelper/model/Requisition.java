@@ -9,11 +9,12 @@ import java.util.Date;
 
 public class Requisition {
 
-    final Long id;
-    final int reqNum;
-    final int runNum;
-    final Date testTime;
-    final boolean done;
+    public final Long id;
+    public final int reqNum;
+    public final int runNum;
+    public final Date testTime;
+    public final boolean done;
+    public final Patient patient;
 
     private Requisition(Builder builder) {
         this.id = builder.id;
@@ -21,14 +22,16 @@ public class Requisition {
         this.runNum = builder.runNum;
         this.testTime = builder.testTime;
         this.done = builder.done;
+        this.patient = builder.patient;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private int reqNum;
         private int runNum;
         private Date testTime;
         private boolean done;
+        private Patient patient;
 
         public Builder() {}
 
@@ -57,6 +60,11 @@ public class Requisition {
             return this;
         }
 
+        public Builder setPatient(Patient patient) {
+            this.patient = patient;
+            return this;
+        }
+
         public Requisition build() {
             return new Requisition(this);
         }
@@ -70,6 +78,7 @@ public class Requisition {
                 ", runNum=" + runNum +
                 ", testTime=" + testTime +
                 ", done=" + done +
+                ", patient=" + patient +
                 '}';
     }
 }

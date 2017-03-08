@@ -6,27 +6,24 @@ package io.peqo.kbahelper.model;
 
 public class Patient {
 
-    final Long id;
-    final String firstName;
-    final String lastName;
-    final int customerNum;
-    final String cprNum;
-    final boolean registered;
+    public final Long id;
+    public final String firstName;
+    public final String lastName;
+    public final String cprNum;
+    public final boolean registered;
 
     private Patient(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
-        this.customerNum = builder.customerNum;
         this.cprNum = builder.cprNum;
         this.registered = builder.registered;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private String firstName;
         private String lastName;
-        private int customerNum;
         private String cprNum;
         private boolean registered;
 
@@ -47,11 +44,6 @@ public class Patient {
             return this;
         }
 
-        public Builder setCustomerNum(int customerNum) {
-            this.customerNum = customerNum;
-            return this;
-        }
-
         public Builder setCprNum(String cprNum) {
             this.cprNum = cprNum;
             return this;
@@ -67,4 +59,14 @@ public class Patient {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", cprNum='" + cprNum + '\'' +
+                ", registered=" + registered +
+                '}';
+    }
 }

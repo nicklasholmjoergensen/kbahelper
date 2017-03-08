@@ -13,6 +13,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.Requisition;
 
 public class RequisitionListAdapter extends BaseAdapter {
@@ -35,6 +36,13 @@ public class RequisitionListAdapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
         ButterKnife.bind(this, row);
+
+        Requisition requisition = requisitions.get(position);
+        Patient patient = requisition.patient;
+
+        patientName.setText(patient.firstName);
+        patientCpr.setText(patient.cprNum);
+
         return row;
     }
 
