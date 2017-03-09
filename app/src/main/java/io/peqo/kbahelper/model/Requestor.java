@@ -6,12 +6,12 @@ package io.peqo.kbahelper.model;
 
 public class Requestor {
 
-    final Long id;
-    final String name;
-    final String department;
-    final String address;
-    final String postalCode;
-    final String country;
+    public final Long id;
+    public final String name;
+    public final String department;
+    public final String address;
+    public final String postalCode;
+    public final String country;
 
     private Requestor(Builder builder) {
         this.id = builder.id;
@@ -22,7 +22,7 @@ public class Requestor {
         this.country = builder.country;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private String name;
         private String department;

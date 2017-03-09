@@ -6,15 +6,15 @@ package io.peqo.kbahelper.model;
 
 public class Room {
 
-    final Long id;
-    final int roomNumber;
+    public final Long id;
+    public final int roomNumber;
 
     private Room(Builder builder) {
         this.id = builder.id;
         this.roomNumber = builder.roomNumber;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private int roomNumber;
 

@@ -2,15 +2,15 @@ package io.peqo.kbahelper.model;
 
 public class Department {
 
-    final Long id;
-    final String name;
+    public final Long id;
+    public final String name;
 
     private Department(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private String name;
 

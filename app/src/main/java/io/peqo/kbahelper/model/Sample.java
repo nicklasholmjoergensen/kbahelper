@@ -2,9 +2,9 @@ package io.peqo.kbahelper.model;
 
 public class Sample {
 
-    final Long id;
-    final String name;
-    final boolean taken;
+    public final Long id;
+    public final String name;
+    public final boolean taken;
 
     private Sample(Builder builder) {
         this.id = builder.id;
@@ -12,7 +12,7 @@ public class Sample {
         this.taken = builder.taken;
     }
 
-    static class Builder {
+    public static class Builder {
         private Long id;
         private String name;
         private boolean taken;
