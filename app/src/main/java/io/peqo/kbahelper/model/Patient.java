@@ -4,7 +4,7 @@ package io.peqo.kbahelper.model;
  * Class for representing a patient.
  */
 
-public class Patient {
+public final class Patient {
 
     public final Long id;
     public final String firstName;

@@ -4,7 +4,7 @@ package io.peqo.kbahelper.model;
  * Class modelling a roomNumber with x-number of patients.
  */
 
-public class Room {
+public final class Room {
 
     public final Long id;
     public final int roomNumber;

@@ -1,6 +1,6 @@
 package io.peqo.kbahelper.model;
 
-public class Sample {
+public final class Sample {
 
     public final Long id;
     public final String name;

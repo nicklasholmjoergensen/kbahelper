@@ -5,7 +5,7 @@ package io.peqo.kbahelper.model;
  * and a one-to-one relationship with a Patient.
  */
 
-public class Bed {
+public final class Bed {
 
     public final Long id;
     public final int bedNumber;

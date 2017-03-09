@@ -7,7 +7,7 @@ import java.util.Date;
  * Contains information about bloodwork, assigned User and more.
  */
 
-public class Requisition {
+public final class Requisition {
 
     public final Long id;
     public final int reqNum;
