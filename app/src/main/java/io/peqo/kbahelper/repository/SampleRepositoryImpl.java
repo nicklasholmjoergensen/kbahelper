@@ -7,19 +7,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-import io.peqo.kbahelper.model.Patient;
+import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.network.ApiConnection;
 
-public class PatientRepositoryImpl implements PatientRepository {
+/**
+ * Created by Nicklas on 13-03-2017.
+ */
 
-    private final String URL = "http://207.154.199.94/api/patients";
+public class SampleRepositoryImpl implements SampleRepository {
+
+    private final String URL = "http://207.154.199.94/api/samples";
 
     @Override
-    public List<Patient> fetchAll() {
+    public List<Sample> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             String response = ApiConnection.createGET(URL).syncRequest();
-            return mapper.readValue(response, new TypeReference<List<Patient>>(){});
+            return mapper.readValue(response, new TypeReference<List<Sample>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
         }
@@ -27,11 +31,11 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public Patient fetchObject(Long id) {
+    public Sample fetchObject(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
-            return mapper.readValue(response, Patient.class);
+            return mapper.readValue(response, Sample.class);
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
         }
@@ -39,7 +43,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public void save(Patient patient) {
+    public void save(Sample sample) {
 
     }
 

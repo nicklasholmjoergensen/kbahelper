@@ -22,8 +22,7 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
     public List<Requisition> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL)
-                    .syncRequest();
+            String response = ApiConnection.createGET(URL).syncRequest();
             return mapper.readValue(response, new TypeReference<List<Requisition>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
