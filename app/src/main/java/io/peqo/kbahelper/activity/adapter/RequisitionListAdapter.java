@@ -33,9 +33,11 @@ public class RequisitionListAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
-        ButterKnife.bind(this, row);
-        return row;
+        if(convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
+        }
+        ButterKnife.bind(this, convertView);
+        return convertView;
     }
 
     @Override
