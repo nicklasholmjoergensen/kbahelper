@@ -26,7 +26,7 @@ public final class Bed {
             return this;
         }
 
-        public Builder bedNumber(int bedNumber) {
+        public Builder setBedNumber(int bedNumber) {
             this.bedNumber = bedNumber;
             return this;
         }
