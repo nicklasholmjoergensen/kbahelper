@@ -13,12 +13,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
+import io.peqo.kbahelper.model.Requisition;
 
 public class RequisitionListAdapter extends BaseAdapter {
 
     private Context c;
-    private List<RequisitionListWrapper> requisitions;
+    private List<Requisition> requisitions;
 
     @BindView(R.id.requistionListPatientName) TextView patientName;
     @BindView(R.id.requistionListPatientCpr) TextView patientCpr;
@@ -26,7 +26,7 @@ public class RequisitionListAdapter extends BaseAdapter {
     @BindView(R.id.listReqOverviewRoom) TextView patientRoom;
     @BindView(R.id.listReqOverviewBed) TextView patientBed;
 
-    public RequisitionListAdapter(Context context, List<RequisitionListWrapper> requisitions) {
+    public RequisitionListAdapter(Context context, List<Requisition> requisitions) {
         this.c = context;
         this.requisitions = requisitions;
     }
@@ -35,15 +35,6 @@ public class RequisitionListAdapter extends BaseAdapter {
         LayoutInflater layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
         ButterKnife.bind(this, row);
-
-        RequisitionListWrapper wrapper = requisitions.get(position);
-
-        patientName.setText(wrapper.firstName + " " + wrapper.lastName);
-        patientCpr.setText(wrapper.cprNum);
-        patientDept.setText(wrapper.deptName);
-        patientRoom.setText(String.valueOf(wrapper.roomNumber));
-        patientBed.setText(String.valueOf(wrapper.bedNumber));
-
         return row;
     }
 

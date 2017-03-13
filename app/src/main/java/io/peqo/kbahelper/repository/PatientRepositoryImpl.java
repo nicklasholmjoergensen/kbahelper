@@ -7,24 +7,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-import io.peqo.kbahelper.model.Requisition;
+import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.network.ApiConnection;
 
-/**
- * Concrete implementation of RequistionRepository.
- */
+public class PatientRepositoryImpl implements PatientRepository {
 
-public class RequisitionRepositoryImpl implements RequisitionRepository {
-
-    private final String URL = "http://207.154.199.94/api/req";
+    private final String URL = "http://207.154.199.94/api/patients";
 
     @Override
-    public List<Requisition> fetchAll() {
+    public List<Patient> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             String response = ApiConnection.createGET(URL)
                     .syncRequest();
-            return mapper.readValue(response, new TypeReference<List<Requisition>>(){});
+            return mapper.readValue(response, new TypeReference<List<Patient>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
         }
@@ -32,11 +28,11 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
     }
 
     @Override
-    public Requisition fetchObject(Long id) {
+    public Patient fetchObject(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
-            return mapper.readValue(response, Requisition.class);
+            return mapper.readValue(response, Patient.class);
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
         }
@@ -44,7 +40,7 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
     }
 
     @Override
-    public void save(Requisition requisition) {
+    public void save(Patient patient) {
 
     }
 

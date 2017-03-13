@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
@@ -42,16 +44,16 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         getActivity().setTitle("Hjem");
     }
 
-    private class ReturnReq extends AsyncTask<Void, Void, Requisition> {
+    private class ReturnReq extends AsyncTask<Void, Void, List<Requisition>> {
 
         @Override
-        protected Requisition doInBackground(Void... voids) {
-            return requisitionRepository.findOne(1L);
+        protected List<Requisition> doInBackground(Void... voids) {
+            return requisitionRepository.fetchAll();
         }
 
         @Override
-        protected void onPostExecute(Requisition requisition) {
-            Log.d(TAG, requisition.toString());
+        protected void onPostExecute(List<Requisition> requisitions) {
+            Log.d(TAG, requisitions.toString());
         }
     }
 }

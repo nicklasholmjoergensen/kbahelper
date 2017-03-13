@@ -10,8 +10,8 @@ import io.peqo.kbahelper.model.Requisition;
 
 interface RequisitionRepository {
 
-    List<Requisition> findAll();
-    Requisition findOne(Long id);
+    List<Requisition> fetchAll();
+    Requisition fetchObject(Long id);
     void save(Requisition requisition);
     void delete(Long id);
 
