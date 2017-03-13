@@ -16,12 +16,12 @@ import java.util.Date;
 public final class Requisition {
 
     public final Long id;
+    public final Long patientId;
+    public final Long requestorId;
     public final int reqNum;
     public final int runNum;
-    public final Date testTime;
     public final int status;
-    public final int patientId;
-    public final int requestorId;
+    public final Date testTime;
 
     private Requisition(Builder builder) {
         this.id = builder.id;
@@ -36,12 +36,12 @@ public final class Requisition {
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
+        private Long patientId;
+        private Long requestorId;
         private int reqNum;
         private int runNum;
-        private Date testTime;
         private int status;
-        private int patientId;
-        private int requestorId;
+        private Date testTime;
 
         public Builder() {}
 
@@ -77,13 +77,13 @@ public final class Requisition {
         }
 
         @JsonProperty("patient_id")
-        public Builder setPatientId(int patientId) {
+        public Builder setPatientId(Long patientId) {
             this.patientId = patientId;
             return this;
         }
 
         @JsonProperty("requestor_id")
-        public Builder setRequestorId(int requestorId) {
+        public Builder setRequestorId(Long requestorId) {
             this.requestorId = requestorId;
             return this;
         }

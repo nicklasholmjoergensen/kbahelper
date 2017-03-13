@@ -1,9 +1,14 @@
 package io.peqo.kbahelper.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  * Class modelling the dept_name requesting the bloodwork.
  */
 
+@JsonDeserialize(builder = Requestor.Builder.class)
 public final class Requestor {
 
     public final Long id;
@@ -22,6 +27,7 @@ public final class Requestor {
         this.country = builder.country;
     }
 
+    @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
         private String name;
@@ -32,31 +38,37 @@ public final class Requestor {
 
         public Builder() {}
 
+        @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
             return this;
         }
 
+        @JsonProperty("name")
         public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
+        @JsonProperty("department")
         public Builder setDepartment(String department) {
             this.department = department;
             return this;
         }
 
+        @JsonProperty("address")
         public Builder setAddress(String address) {
             this.address = address;
             return this;
         }
 
+        @JsonProperty("postal_code")
         public Builder setPostalCode(String postalCode) {
             this.postalCode = postalCode;
             return this;
         }
 
+        @JsonProperty("country")
         public Builder setCountry(String country) {
             this.country = country;
             return this;

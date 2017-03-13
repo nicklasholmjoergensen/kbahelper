@@ -14,7 +14,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.model.Requisition;
+import io.peqo.kbahelper.repository.PatientRepositoryImpl;
 import io.peqo.kbahelper.repository.RequisitionRepositoryImpl;
 
 public class HomeFragment extends android.support.v4.app.Fragment {
@@ -22,6 +24,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
     public static final String TAG = "Home fragment";
 
     private RequisitionRepositoryImpl requisitionRepository;
+    private PatientRepositoryImpl patientRepository;
 
     @BindView(R.id.requisitionList) ListView requisitionList;
 
@@ -33,6 +36,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         requisitionRepository = new RequisitionRepositoryImpl();
+        patientRepository = new PatientRepositoryImpl();
         Log.d(TAG, "OnCreate method fired.");
         new ReturnReq().execute();
         return view;
@@ -48,7 +52,10 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected List<Requisition> doInBackground(Void... voids) {
-            return requisitionRepository.fetchAll();
+            List<Requisition> requisitions = requisitionRepository.fetchAll();
+            Patient patient = patientRepository.fetchObject(requisitions.get(0).patientId);
+            Log.d(TAG, patient.toString());
+            return requisitions;
         }
 
         @Override
