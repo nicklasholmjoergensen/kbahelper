@@ -37,6 +37,14 @@ public class RequisitionListAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.row_requisition_overview, parent, false);
         }
         ButterKnife.bind(this, convertView);
+
+        RequisitionListWrapper obj = requisitions.get(position);
+        patientName.setText(obj.firstName + " " + obj.lastName);
+        patientCpr.setText(obj.cprNumber);
+        patientDept.setText(obj.department);
+        patientRoom.setText(String.valueOf(obj.roomNumber));
+        patientBed.setText(String.valueOf(obj.bedNumber));
+
         return convertView;
     }
 

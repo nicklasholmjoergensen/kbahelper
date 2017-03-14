@@ -14,17 +14,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.model.Patient;
-import io.peqo.kbahelper.model.Requisition;
-import io.peqo.kbahelper.repository.PatientRepositoryImpl;
-import io.peqo.kbahelper.repository.RequisitionRepositoryImpl;
+import io.peqo.kbahelper.activity.adapter.RequisitionListAdapter;
+import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
+import io.peqo.kbahelper.repository.RequisitionListWrapperRepositoryImpl;
+import io.peqo.kbahelper.repository.contract.RequisitionListWrapperRepository;
 
 public class HomeFragment extends android.support.v4.app.Fragment {
 
     public static final String TAG = "Home fragment";
 
-    private RequisitionRepositoryImpl requisitionRepository;
-    private PatientRepositoryImpl patientRepository;
+    private RequisitionListWrapperRepository requisitionRepository;
 
     @BindView(R.id.requisitionList) ListView requisitionList;
 
@@ -35,8 +34,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-        requisitionRepository = new RequisitionRepositoryImpl();
-        patientRepository = new PatientRepositoryImpl();
+        requisitionRepository = new RequisitionListWrapperRepositoryImpl();
         Log.d(TAG, "OnCreate method fired.");
         new ReturnReq().execute();
         return view;
@@ -48,19 +46,17 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         getActivity().setTitle("Hjem");
     }
 
-    private class ReturnReq extends AsyncTask<Void, Void, List<Requisition>> {
+    private class ReturnReq extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
 
         @Override
-        protected List<Requisition> doInBackground(Void... voids) {
-            List<Requisition> requisitions = requisitionRepository.fetchAll();
-            Patient patient = patientRepository.fetchObject(requisitions.get(0).patientId);
-            Log.d(TAG, patient.toString());
-            return requisitions;
+        protected List<RequisitionListWrapper> doInBackground(Void... voids) {
+            return requisitionRepository.fetchAll();
         }
 
         @Override
-        protected void onPostExecute(List<Requisition> requisitions) {
-            Log.d(TAG, requisitions.toString());
+        protected void onPostExecute(List<RequisitionListWrapper> requisitions) {
+            RequisitionListAdapter adapter = new RequisitionListAdapter(getContext(), requisitions);
+            requisitionList.setAdapter(adapter);
         }
     }
 }
