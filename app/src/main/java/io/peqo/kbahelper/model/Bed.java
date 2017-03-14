@@ -14,16 +14,22 @@ public final class Bed {
 
     public final Long id;
     public final int bedNumber;
+    public final Long patientId;
+    public final Long roomId;
 
     private Bed(Builder builder) {
         this.id = builder.id;
         this.bedNumber = builder.bedNumber;
+        this.patientId = builder.patientId;
+        this.roomId = builder.roomId;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
         private int bedNumber;
+        private Long patientId;
+        private Long roomId;
 
         public Builder() {}
 
@@ -36,6 +42,18 @@ public final class Bed {
         @JsonProperty("bed_number")
         public Builder setBedNumber(int bedNumber) {
             this.bedNumber = bedNumber;
+            return this;
+        }
+
+        @JsonProperty("patient_id")
+        public Builder setPatientId(Long patientId) {
+            this.patientId = patientId;
+            return this;
+        }
+
+        @JsonProperty("room_id")
+        public Builder setRoomId(Long roomId) {
+            this.roomId = roomId;
             return this;
         }
 

@@ -13,16 +13,19 @@ public final class Room {
 
     public final Long id;
     public final int roomNumber;
+    public final Long departmentId;
 
     private Room(Builder builder) {
         this.id = builder.id;
         this.roomNumber = builder.roomNumber;
+        this.departmentId = builder.departmentId;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
         private int roomNumber;
+        private Long departmentId;
 
         public Builder() {}
 
@@ -35,6 +38,12 @@ public final class Room {
         @JsonProperty("room_number")
         public Builder roomNumber(int roomNumber) {
             this.roomNumber = roomNumber;
+            return this;
+        }
+
+        @JsonProperty("department_id")
+        public Builder setDepartmentId(Long departmentId) {
+            this.departmentId = departmentId;
             return this;
         }
 

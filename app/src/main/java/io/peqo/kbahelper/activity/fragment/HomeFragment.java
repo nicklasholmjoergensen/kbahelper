@@ -39,7 +39,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         ButterKnife.bind(this, view);
         requisitionRepository = new RequisitionListWrapperRepositoryImpl();
         Log.d(TAG, "OnCreate method fired.");
-        new ReturnReq().execute();
+        new RetrieveRequisitionListFromApi().execute();
         return view;
     }
 
@@ -49,7 +49,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         getActivity().setTitle("Hjem");
     }
 
-    private class ReturnReq extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
+    private class RetrieveRequisitionListFromApi extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
 
         @Override
         protected List<RequisitionListWrapper> doInBackground(Void... voids) {

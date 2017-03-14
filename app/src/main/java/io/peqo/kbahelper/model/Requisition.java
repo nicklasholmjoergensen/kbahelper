@@ -64,7 +64,7 @@ public final class Requisition {
         }
 
         @JsonProperty("test_date")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
         public Builder setTestTime(Date testTime) {
             this.testTime = testTime;
             return this;
