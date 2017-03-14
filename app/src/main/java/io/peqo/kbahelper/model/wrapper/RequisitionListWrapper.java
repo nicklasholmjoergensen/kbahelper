@@ -57,7 +57,7 @@ public class RequisitionListWrapper {
             return this;
         }
 
-        @JsonProperty("cpr_number")
+        @JsonProperty("cpr_num")
         public Builder setCprNumber(String cprNumber) {
             this.cprNumber = cprNumber;
             return this;
