@@ -3,10 +3,13 @@ package io.peqo.kbahelper.activity.fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -57,6 +60,22 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(List<RequisitionListWrapper> requisitions) {
             RequisitionListAdapter adapter = new RequisitionListAdapter(getContext(), requisitions);
             requisitionList.setAdapter(adapter);
+            requisitionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("id", adapter.getItemId(i));
+
+                    Fragment fragment = new RequisitionFragment();
+                    fragment.setArguments(bundle);
+                    FragmentTransaction ft = getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction();
+                    ft.replace(R.id.content_main, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            });
         }
     }
 }
