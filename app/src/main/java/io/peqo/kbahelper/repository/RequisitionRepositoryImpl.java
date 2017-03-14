@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Requisition;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.RequisitionRepository;
 
 /**
  * Concrete implementation of RequistionRepository.

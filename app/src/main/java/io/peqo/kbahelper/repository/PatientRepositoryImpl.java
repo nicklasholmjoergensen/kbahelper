@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Patient;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.PatientRepository;
 
 public class PatientRepositoryImpl implements PatientRepository {
 

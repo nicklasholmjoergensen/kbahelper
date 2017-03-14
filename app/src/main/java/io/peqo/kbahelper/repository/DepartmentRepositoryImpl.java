@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Department;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.DepartmentRepository;
 
 public class DepartmentRepositoryImpl implements DepartmentRepository {
 

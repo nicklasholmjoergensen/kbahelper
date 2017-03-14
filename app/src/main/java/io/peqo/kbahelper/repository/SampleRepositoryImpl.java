@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.SampleRepository;
 
 /**
  * Created by Nicklas on 13-03-2017.

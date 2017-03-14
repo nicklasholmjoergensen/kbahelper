@@ -1,4 +1,4 @@
-package io.peqo.kbahelper.repository;
+package io.peqo.kbahelper.repository.contract;
 
 import java.util.List;
 

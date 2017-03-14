@@ -1,4 +1,4 @@
-package io.peqo.kbahelper.repository;
+package io.peqo.kbahelper.repository.contract;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import io.peqo.kbahelper.model.Requisition;
  * Contract for RequsitionRepository.
  */
 
-interface RequisitionRepository {
+public interface RequisitionRepository {
 
     List<Requisition> fetchAll();
     Requisition fetchObject(Long id);

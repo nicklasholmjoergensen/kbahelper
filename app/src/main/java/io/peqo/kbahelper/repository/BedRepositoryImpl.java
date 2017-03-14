@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Bed;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.BedRepository;
 
 public class BedRepositoryImpl implements BedRepository {
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.peqo.kbahelper.model.Room;
 import io.peqo.kbahelper.network.ApiConnection;
+import io.peqo.kbahelper.repository.contract.RoomRepository;
 
 public class RoomRepositoryImpl implements RoomRepository {
 
