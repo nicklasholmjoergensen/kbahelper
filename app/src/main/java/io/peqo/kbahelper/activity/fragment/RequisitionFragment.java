@@ -120,7 +120,6 @@ public class RequisitionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Rekvisition: #" + reqId);
     }
 
     private void toggleVisibility(final View view) {
@@ -175,6 +174,7 @@ public class RequisitionFragment extends Fragment {
                 samplesLayout.addView(card);
             }
 
+            getActivity().setTitle("Rekvisition: #" + requisition.reqNum);
             progressLayout.setVisibility(View.GONE);
         }
     }
