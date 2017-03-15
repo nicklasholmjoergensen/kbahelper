@@ -1,6 +1,7 @@
 package io.peqo.kbahelper.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -105,6 +106,18 @@ public final class Requisition {
         public Builder setDescription(String description) {
             this.description = description;
             return this;
+        }
+
+        @JsonIgnore
+        public Builder basedOn(Requisition req) {
+            return new Builder()
+                    .setId(req.id)
+                    .setDescription(req.description)
+                    .setOrderDate(req.orderDate)
+                    .setReqNum(req.reqNum)
+                    .setRunNum(req.runNum)
+                    .setPatientId(req.patientId)
+                    .setRequestorId(req.requestorId);
         }
 
         public Requisition build() {
