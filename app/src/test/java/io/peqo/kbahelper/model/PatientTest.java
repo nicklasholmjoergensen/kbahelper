@@ -19,7 +19,7 @@ public class PatientTest {
                 .setCprNum("041189-2837")
                 .setFirstName("Nicklas")
                 .setLastName("Jørgensen")
-                .setStatus(false)
+                .setStatus(1)
                 .build();
         assertThat(patient.id, is(equalTo(1L)));
     }

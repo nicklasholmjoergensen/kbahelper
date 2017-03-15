@@ -58,7 +58,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected void onPostExecute(List<RequisitionListWrapper> requisitions) {
-            RequisitionListAdapter adapter = new RequisitionListAdapter(getContext(), requisitions);
+            final RequisitionListAdapter adapter = new RequisitionListAdapter(getContext(), requisitions);
             requisitionList.setAdapter(adapter);
             requisitionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

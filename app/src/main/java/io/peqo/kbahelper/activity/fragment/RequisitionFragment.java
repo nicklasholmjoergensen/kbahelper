@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,12 +41,22 @@ import io.peqo.kbahelper.repository.SampleRepositoryImpl;
 public class RequisitionFragment extends Fragment {
 
     private static final String TAG = "Requisition Fragment";
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    // Model objects for UI
+    private Requisition requisition;
+    private Patient patient;
+    private Bed bed;
+    private Room room;
+    private Department department;
+    private Requestor requestor;
     private List<Sample> samples;
     private List<CardView> cardViews;
 
     // Keep track of samples
     private int count = 0;
+
+    // Requisition ID passed from activity
     private Long reqId;
 
     // Bind views
@@ -73,13 +84,13 @@ public class RequisitionFragment extends Fragment {
     @BindView(R.id.requisitionProgress) ProgressBar progressBar;
 
     // Repositories
-    private BedRepositoryImpl bedRepository;
-    private DepartmentRepositoryImpl departmentRepository;
-    private PatientRepositoryImpl patientRepository;
-    private RequestorRepositoryImpl requestorRepository;
-    private RequisitionRepositoryImpl requisitionRepository;
-    private RoomRepositoryImpl roomRepository;
-    private SampleRepositoryImpl sampleRepository;
+    private final BedRepositoryImpl bedRepository = new BedRepositoryImpl();
+    private final DepartmentRepositoryImpl departmentRepository = new DepartmentRepositoryImpl();
+    private final PatientRepositoryImpl patientRepository  = new PatientRepositoryImpl();
+    private final RequestorRepositoryImpl requestorRepository  = new RequestorRepositoryImpl();
+    private final RequisitionRepositoryImpl requisitionRepository = new RequisitionRepositoryImpl();
+    private final RoomRepositoryImpl roomRepository = new RoomRepositoryImpl();
+    private final SampleRepositoryImpl sampleRepository = new SampleRepositoryImpl();
 
     @Nullable
     @Override
@@ -89,16 +100,7 @@ public class RequisitionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_requisition_single, container, false);
         ButterKnife.bind(this, view);
 
-        bedRepository = new BedRepositoryImpl();
-        departmentRepository = new DepartmentRepositoryImpl();
-        patientRepository = new PatientRepositoryImpl();
-        requestorRepository = new RequestorRepositoryImpl();
-        requisitionRepository = new RequisitionRepositoryImpl();
-        roomRepository = new RoomRepositoryImpl();
-        sampleRepository = new SampleRepositoryImpl();
-
-        Bundle bundle = this.getArguments();
-        reqId = bundle.getLong("id");
+        reqId = this.getArguments().getLong("id");
 
         new RetrieveRequisitionFromApi().execute();
 
@@ -132,52 +134,49 @@ public class RequisitionFragment extends Fragment {
         }
     }
 
-    public class RetrieveRequisitionFromApi extends AsyncTask<Void, Void, Object[]> {
+    public class RetrieveRequisitionFromApi extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected Object[] doInBackground(Void... voids) {
-            Log.d(TAG, "" + reqId);
-            Requisition req = requisitionRepository.fetchObject(reqId);
-            Patient patient = patientRepository.fetchObject(req.patientId);
-            Requestor requestor = requestorRepository.fetchObject(req.requestorId);
-            Bed bed = bedRepository.fetchObject(patient.id);
-            Room room = roomRepository.fetchObject(bed.roomId);
-            Department dept = departmentRepository.fetchObject(room.departmentId);
-
-            Object[] args = {
-                    req,
-                    patient,
-                    requestor,
-                    bed,
-                    room,
-                    dept
-            };
-            return args;
+        protected Void doInBackground(Void... voids) {
+            requisition = requisitionRepository.fetchObject(reqId);
+            patient = patientRepository.fetchObject(requisition.patientId);
+            requestor = requestorRepository.fetchObject(requisition.requestorId);
+            bed = bedRepository.fetchObject(patient.id);
+            room = roomRepository.fetchObject(bed.roomId);
+            department = departmentRepository.fetchObject(room.departmentId);
+            samples = sampleRepository.fetchAllFromId(requisition.id);
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Object[] objects) {
-            Requisition req = (Requisition) objects[0];
-            Patient patient = (Patient) objects[1];
-            Requestor requestor = (Requestor) objects[2];
-            Bed bed = (Bed) objects[3];
-            Room room = (Room) objects[4];
-            Department dept = (Department) objects[5];
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-
-            requisitionNumber.setText(String.valueOf(req.runNum));
-            requisitionRunNumber.setText(String.valueOf(req.runNum));
-            requisitionDate.setText(df.format(req.testTime));
+        protected void onPostExecute(Void aVoid) {
+            requisitionNumber.setText(String.valueOf(requisition.runNum));
+            requisitionRunNumber.setText(String.valueOf(requisition.runNum));
+            requisitionDate.setText(df.format(requisition.testTime));
             patientName.setText(patient.firstName + " " + patient.lastName);
             patientCpr.setText(patient.cprNum);
             patientBed.setText(String.valueOf(bed.bedNumber));
             patientRoom.setText(String.valueOf(room.roomNumber));
-            patientDept.setText(dept.name);
+            patientDept.setText(department.name);
             requestorName.setText(requestor.name);
             requestorDepartment.setText(requestor.department);
             requestorAddress.setText(requestor.address);
             requestorZip.setText(requestor.postalCode);
             requestorCountry.setText(requestor.country);
+
+            cardViews = new ArrayList<>();
+            for(int i = 0; i < samples.size(); i++) {
+                final CardView card = new CardView(getActivity());
+                final TextView text = new TextView(getActivity());
+                card.setUseCompatPadding(true);
+                card.setPadding(12, 12, 12, 12);
+                text.setText(samples.get(i).name);
+                text.setId(i);
+                text.setPadding(12, 12, 12, 12);
+                card.addView(text);
+                cardViews.add(card);
+                samplesLayout.addView(card);
+            }
 
             progressLayout.setVisibility(View.GONE);
         }

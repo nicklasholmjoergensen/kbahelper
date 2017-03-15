@@ -32,11 +32,11 @@ public class SampleRepositoryImpl implements SampleRepository {
     }
 
     @Override
-    public Sample fetchObject(Long id) {
+    public List<Sample> fetchAllFromId(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
-            return mapper.readValue(response, Sample.class);
+            return mapper.readValue(response, new TypeReference<List<Sample>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
         }

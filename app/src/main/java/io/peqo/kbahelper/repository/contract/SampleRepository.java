@@ -7,7 +7,7 @@ import io.peqo.kbahelper.model.Sample;
 public interface SampleRepository {
 
     List<Sample> fetchAll();
-    Sample fetchObject(Long id);
+    List<Sample> fetchAllFromId(Long id);
     void save(Sample sample);
     void delete(Long id);
 
