@@ -108,7 +108,9 @@ public class RequisitionFragment extends Fragment {
     }
 
     @OnClick(R.id.btnReqScanSample)
-    public void scanSample() {}
+    public void scanSample() {
+        new UpdateRequisitionByApi().execute();
+    }
 
     @OnClick(R.id.btnReqScanBracelet)
     public void scanBracelet() {}
@@ -178,6 +180,15 @@ public class RequisitionFragment extends Fragment {
 
             getActivity().setTitle("Rekvisition: #" + requisition.reqNum);
             progressLayout.setVisibility(View.GONE);
+        }
+    }
+
+    public class UpdateRequisitionByApi extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            requisitionRepository.save(requisition);
+            return null;
         }
     }
 

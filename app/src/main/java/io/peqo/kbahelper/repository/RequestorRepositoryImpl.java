@@ -23,7 +23,7 @@ public class RequestorRepositoryImpl implements RequestorRepository {
     public Requestor fetchObject(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
+            String response = ApiConnection.open(URL + "/" + id).syncGetRequest();
             return mapper.readValue(response, Requestor.class);
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);

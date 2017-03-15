@@ -19,7 +19,7 @@ public class RequisitionListWrapperRepositoryImpl implements RequisitionListWrap
     public List<RequisitionListWrapper> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL).syncRequest();
+            String response = ApiConnection.open(URL).syncGetRequest();
             return mapper.readValue(response, new TypeReference<List<RequisitionListWrapper>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);

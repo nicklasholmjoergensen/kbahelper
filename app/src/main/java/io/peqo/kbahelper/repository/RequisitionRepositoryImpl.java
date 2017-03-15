@@ -23,7 +23,7 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
     public List<Requisition> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL).syncRequest();
+            String response = ApiConnection.open(URL).syncGetRequest();
             return mapper.readValue(response, new TypeReference<List<Requisition>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
@@ -35,7 +35,7 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
     public Requisition fetchObject(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
+            String response = ApiConnection.open(URL + "/" + id).syncGetRequest();
             return mapper.readValue(response, Requisition.class);
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
@@ -45,7 +45,15 @@ public class RequisitionRepositoryImpl implements RequisitionRepository {
 
     @Override
     public void save(Requisition requisition) {
-
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(requisition);
+            String response = ApiConnection.open(URL)
+                    .syncPostRequest(json);
+            Log.d("DEBUG", response);
+        } catch(Exception e) {
+            Log.d("DEBUG", "Error: " + e);
+        }
     }
 
     @Override

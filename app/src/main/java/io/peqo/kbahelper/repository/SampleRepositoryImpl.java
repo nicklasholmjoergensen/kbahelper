@@ -23,7 +23,7 @@ public class SampleRepositoryImpl implements SampleRepository {
     public List<Sample> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL).syncRequest();
+            String response = ApiConnection.open(URL).syncGetRequest();
             return mapper.readValue(response, new TypeReference<List<Sample>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
@@ -35,7 +35,7 @@ public class SampleRepositoryImpl implements SampleRepository {
     public List<Sample> fetchAllFromId(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
+            String response = ApiConnection.open(URL + "/" + id).syncGetRequest();
             return mapper.readValue(response, new TypeReference<List<Sample>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);

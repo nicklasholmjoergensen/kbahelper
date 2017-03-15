@@ -19,7 +19,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     public List<Patient> fetchAll() {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL).syncRequest();
+            String response = ApiConnection.open(URL).syncGetRequest();
             return mapper.readValue(response, new TypeReference<List<Patient>>(){});
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
@@ -31,7 +31,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     public Patient fetchObject(Long id) {
         final ObjectMapper mapper = new ObjectMapper();
         try {
-            String response = ApiConnection.createGET(URL + "/" + id).syncRequest();
+            String response = ApiConnection.open(URL + "/" + id).syncGetRequest();
             return mapper.readValue(response, Patient.class);
         } catch(Exception e) {
             Log.d("DEBUG", "Error: " + e);
