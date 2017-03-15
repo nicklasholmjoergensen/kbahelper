@@ -16,10 +16,10 @@
     <string name="text_patient_cpr">Patient CPR nummer</string>
     <string name="label_patient_room">Stue:</string>
     <string name="label_patient_bed">Seng:</string>
-    <string name="label_req_testdate">Dato:</string>
+    <string name="label_req_testdate">Prøvetid:</string>
     <string name="text_req_testdate">01-01-2017 11:00</string>
-    <string name="label_req_run_number">Løbenr.:</string>
-    <string name="text_req_run_number">0000</string>
+    <string name="label_req_fulfilled_date">Udført:</string>
+    <string name="text_req_fulfilled_date">Afventer</string>
     <string name="label_req_number">Rkv no:</string>
     <string name="text_req_number">101153</string>
     <string name="title_req_requistor">Rekvirent:</string>

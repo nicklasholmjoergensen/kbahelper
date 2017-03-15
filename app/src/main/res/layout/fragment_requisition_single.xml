@@ -55,42 +55,26 @@
                             android:text="@string/text_req_testdate"
                             android:paddingTop="8dp"
                             android:layout_toEndOf="@+id/textReqTestDateLabel"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textReqRunNumberLabel"
-                            android:paddingStart="16dp"
-                            android:paddingTop="8dp"
-                            android:paddingEnd="4dp"
-                            android:text="@string/label_req_run_number"
-                            android:layout_toEndOf="@id/textReqTestDate"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textReqRunNumber"
-                            android:text="@string/text_req_run_number"
-                            android:paddingTop="8dp"
-                            android:layout_toEndOf="@+id/textReqRunNumberLabel"/>
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textReqNumberLabel"
+                            android:id="@+id/textReqFulfilledDateLabel"
                             android:paddingStart="16dp"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="8dp"
+                            android:paddingTop="8dp"
                             android:paddingEnd="4dp"
-                            android:text="@string/label_req_number" />
+                            android:text="@string/label_req_fulfilled_date"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textReqNumber"
-                            android:text="@string/text_req_number"
-                            android:paddingTop="4dp"
-                            android:layout_toEndOf="@+id/textReqNumberLabel"/>
+                            android:id="@+id/textReqFulfilledDate"
+                            android:text="@string/text_req_fulfilled_date"
+                            android:paddingTop="8dp"
+                            android:layout_toEndOf="@+id/textReqFulfilledDateLabel"/>
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
