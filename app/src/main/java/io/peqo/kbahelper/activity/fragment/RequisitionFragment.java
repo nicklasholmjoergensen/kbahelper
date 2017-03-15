@@ -78,6 +78,7 @@ public class RequisitionFragment extends Fragment {
     @BindView(R.id.textReqRequestorCountry) TextView requestorCountry;
     @BindView(R.id.textReqTestDate) TextView requisitionDate;
     @BindView(R.id.textReqFulfilledDate) TextView requisitionFulfilledDate;
+    @BindView(R.id.textReqDescription) TextView requisitionDescription;
 
     @BindView(R.id.requisitionProgressLayout) LinearLayout progressLayout;
     @BindView(R.id.requisitionProgress) ProgressBar progressBar;
@@ -148,7 +149,8 @@ public class RequisitionFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            requisitionDate.setText(df.format(requisition.testTime));
+            requisitionDate.setText(df.format(requisition.orderDate));
+            requisitionDescription.setText(requisition.description);
             patientName.setText(patient.firstName + " " + patient.lastName);
             patientCpr.setText(patient.cprNum);
             patientBed.setText(String.valueOf(bed.bedNumber));

@@ -40,4 +40,6 @@
     <string name="list_req_overview_room_number">11</string>
     <string name="list_req_overview_bed">Seng:</string>
     <string name="list_req_overview_bed_number">2</string>
+    <string name="reqLabelDescription">Pt. oplysninger:</string>
+    <string name="reqTextDescription">N/A</string>
 </resources>

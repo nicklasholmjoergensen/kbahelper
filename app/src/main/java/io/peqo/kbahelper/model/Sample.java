@@ -10,12 +10,14 @@ public final class Sample {
     public final Long id;
     public final String name;
     public final int status;
+    public final int colorCode;
     public final Long requisitionId;
 
     private Sample(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.status = builder.status;
+        this.colorCode = builder.colorCode;
         this.requisitionId = builder.requisitionId;
     }
 
@@ -24,6 +26,7 @@ public final class Sample {
         private Long id;
         private String name;
         private int status;
+        private int colorCode;
         private Long requisitionId;
 
         public Builder() {}
@@ -43,6 +46,12 @@ public final class Sample {
         @JsonProperty("status")
         public Builder setStatus(int status) {
             this.status = status;
+            return this;
+        }
+
+        @JsonProperty("color_code")
+        public Builder setColorCode(int colorCode) {
+            this.colorCode = colorCode;
             return this;
         }
 

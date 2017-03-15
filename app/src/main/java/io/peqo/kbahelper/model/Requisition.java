@@ -21,14 +21,18 @@ public final class Requisition {
     public final int reqNum;
     public final int runNum;
     public final int status;
-    public final Date testTime;
+    public final Date orderDate;
+    public final Date fulfilledDate;
+    public final String description;
 
     private Requisition(Builder builder) {
         this.id = builder.id;
         this.reqNum = builder.reqNum;
         this.runNum = builder.runNum;
-        this.testTime = builder.testTime;
+        this.orderDate = builder.orderDate;
+        this.fulfilledDate = builder.fulfilledDate;
         this.status = builder.status;
+        this.description = builder.description;
         this.patientId = builder.patientId;
         this.requestorId = builder.requestorId;
     }
@@ -41,7 +45,9 @@ public final class Requisition {
         private int reqNum;
         private int runNum;
         private int status;
-        private Date testTime;
+        private Date orderDate;
+        private Date fulfilledDate;
+        private String description;
 
         public Builder() {}
 
@@ -65,8 +71,15 @@ public final class Requisition {
 
         @JsonProperty("test_date")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-        public Builder setTestTime(Date testTime) {
-            this.testTime = testTime;
+        public Builder setOrderDate(Date orderDate) {
+            this.orderDate = orderDate;
+            return this;
+        }
+
+        @JsonProperty("fulfilled_date")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+        public Builder setFullfilledDate(Date fulfilledDate) {
+            this.fulfilledDate = fulfilledDate;
             return this;
         }
 
@@ -88,6 +101,12 @@ public final class Requisition {
             return this;
         }
 
+        @JsonProperty("description")
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
         public Requisition build() {
             return new Requisition(this);
         }
@@ -99,7 +118,7 @@ public final class Requisition {
                 "id=" + id +
                 ", reqNum=" + reqNum +
                 ", runNum=" + runNum +
-                ", testTime=" + testTime +
+                ", orderDate=" + orderDate +
                 ", status=" + status +
                 ", patientId=" + patientId +
                 ", requestorId=" + requestorId +
