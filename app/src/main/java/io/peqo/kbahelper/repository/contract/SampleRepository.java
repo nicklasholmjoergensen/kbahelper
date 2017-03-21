@@ -8,7 +8,8 @@ public interface SampleRepository {
 
     List<Sample> fetchAll();
     List<Sample> fetchAllFromId(Long id);
-    void save(Sample sample);
+    Sample fetchObject(Long id);
+    int save(Sample sample);
     void delete(Long id);
 
 }

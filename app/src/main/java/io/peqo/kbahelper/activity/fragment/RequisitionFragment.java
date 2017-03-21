@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,11 +55,11 @@ public class RequisitionFragment extends Fragment {
     private List<Sample> samples;
     private List<CardView> cardViews;
 
-    // Keep track of samples
-    private int count = 0;
-
     // Requisition ID passed from activity
     private Long reqId;
+
+    // Keep track of samples
+    int count = 0;
 
     // Bind views
     @BindView(R.id.layoutReqRequestorContainer) LinearLayout requestorContainer;
@@ -112,8 +111,7 @@ public class RequisitionFragment extends Fragment {
 
     @OnClick(R.id.btnReqScanSample)
     public void scanSample() {
-        progressLayout.setVisibility(View.VISIBLE);
-        new UpdateRequisitionFromApi().execute();
+        new UpdateSampleFromApi().execute();
     }
 
     @OnClick(R.id.btnReqScanBracelet)
@@ -156,7 +154,6 @@ public class RequisitionFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             requisitionDate.setText(df.format(requisition.orderDate));
-            requisitionDescription.setText(requisition.description);
             patientName.setText(patient.firstName + " " + patient.lastName);
             patientCpr.setText(patient.cprNum);
             patientBed.setText(String.valueOf(bed.bedNumber));
@@ -168,6 +165,7 @@ public class RequisitionFragment extends Fragment {
             requestorZip.setText(requestor.postalCode);
             requestorCountry.setText(requestor.country);
 
+            if(!requisition.description.isEmpty()) requisitionDescription.setText(requisition.description);
             if(requisition.fulfilledDate != null) requisitionFulfilledDate.setText(df.format(requisition.fulfilledDate));
 
             cardViews = new ArrayList<>();
@@ -195,10 +193,9 @@ public class RequisitionFragment extends Fragment {
         protected Integer doInBackground(Void... voids) {
             final Requisition updatedReq = new Requisition.Builder()
                     .basedOn(requisition)
-                    .setStatus(1)
+                    .setStatus(2)
                     .setFullfilledDate(new Date())
                     .build();
-            Log.d(TAG, updatedReq.toString());
             return requisitionRepository.save(updatedReq);
         }
 
@@ -208,6 +205,29 @@ public class RequisitionFragment extends Fragment {
                 new RetrieveRequisitionFromApi().execute();
             } else {
                 progressLayout.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "Error: " + status, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private class UpdateSampleFromApi extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            Sample sample = samples.get(count);
+            return sampleRepository.save(sample);
+        }
+
+        @Override
+        protected void onPostExecute(Integer status) {
+            if(status == 200) {
+                CardView card = cardViews.get(count);
+                samplesLayout.removeView(card);
+                count++;
+                if(count == samples.size()-1) {
+                    new UpdateRequisitionFromApi().execute();
+                }
+            } else {
                 Toast.makeText(getActivity(), "Error: " + status, Toast.LENGTH_SHORT).show();
             }
         }

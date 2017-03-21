@@ -5,15 +5,13 @@ import android.util.Log;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.List;
 
 import io.peqo.kbahelper.model.Sample;
 import io.peqo.kbahelper.network.ApiConnection;
 import io.peqo.kbahelper.repository.contract.SampleRepository;
-
-/**
- * Created by Nicklas on 13-03-2017.
- */
+import okhttp3.Response;
 
 public class SampleRepositoryImpl implements SampleRepository {
 
@@ -44,8 +42,30 @@ public class SampleRepositoryImpl implements SampleRepository {
     }
 
     @Override
-    public void save(Sample sample) {
+    public Sample fetchObject(Long id) {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            String response = ApiConnection.open(URL + "/s/" + id).syncGetRequest();
+            return mapper.readValue(response, Sample.class);
+        } catch(Exception e) {
+            Log.d("DEBUG", "Error: " + e);
+        }
+        return null;
+    }
 
+    @Override
+    public int save(Sample sample) {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(sample);
+            Response response = ApiConnection.open(URL)
+                    .syncPostRequest(json);
+            if (response != null) return response.code();
+            Log.d("DEBUG", json);
+        } catch(IOException e) {
+            Log.d("DEBUG", "Error: " + e);
+        }
+        return -1;
     }
 
     @Override
