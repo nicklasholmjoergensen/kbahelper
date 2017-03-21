@@ -11,6 +11,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Api Connection used to load and return JSON data from web server.
@@ -23,7 +24,8 @@ public class ApiConnection {
     private static final MediaType JSON = MediaType.parse(CONTENT_TYPE_VALUE_JSON);
 
     private URL url;
-    private String response;
+    private Response response;
+    private String responseBody;
 
     private ApiConnection(String url) throws MalformedURLException {
         this.url = new URL(url);
@@ -36,11 +38,11 @@ public class ApiConnection {
     @Nullable
     public String syncGetRequest() {
         get();
-        return response;
+        return responseBody;
     }
 
     @Nullable
-    public String syncPostRequest(String data) {
+    public Response syncPostRequest(String data) {
         post(data);
         return response;
     }
@@ -54,7 +56,7 @@ public class ApiConnection {
                 .build();
 
         try {
-            this.response = client.newCall(request)
+            this.responseBody = client.newCall(request)
                     .execute()
                     .body()
                     .string();
@@ -73,12 +75,9 @@ public class ApiConnection {
 
         try {
             this.response = client.newCall(request)
-                    .execute()
-                    .body()
-                    .string();
+                    .execute();
         } catch(IOException e) {
             Log.d("DEBUG", "ERROR: " + e);
         }
     }
-
 }

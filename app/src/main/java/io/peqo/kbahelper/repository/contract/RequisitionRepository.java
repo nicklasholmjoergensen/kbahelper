@@ -12,7 +12,7 @@ public interface RequisitionRepository {
 
     List<Requisition> fetchAll();
     Requisition fetchObject(Long id);
-    void save(Requisition requisition);
-    void delete(Long id);
+    int save(Requisition requisition);
+    int delete(Long id);
 
 }

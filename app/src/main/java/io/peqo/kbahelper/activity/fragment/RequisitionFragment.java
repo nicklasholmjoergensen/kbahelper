@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -108,7 +111,10 @@ public class RequisitionFragment extends Fragment {
     }
 
     @OnClick(R.id.btnReqScanSample)
-    public void scanSample() {}
+    public void scanSample() {
+        progressLayout.setVisibility(View.VISIBLE);
+        new UpdateRequisitionFromApi().execute();
+    }
 
     @OnClick(R.id.btnReqScanBracelet)
     public void scanBracelet() {}
@@ -133,7 +139,7 @@ public class RequisitionFragment extends Fragment {
         }
     }
 
-    public class RetrieveRequisitionFromApi extends AsyncTask<Void, Void, Void> {
+    private class RetrieveRequisitionFromApi extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -162,6 +168,8 @@ public class RequisitionFragment extends Fragment {
             requestorZip.setText(requestor.postalCode);
             requestorCountry.setText(requestor.country);
 
+            if(requisition.fulfilledDate != null) requisitionFulfilledDate.setText(df.format(requisition.fulfilledDate));
+
             cardViews = new ArrayList<>();
             for(int i = 0; i < samples.size(); i++) {
                 final CardView card = new CardView(getActivity());
@@ -178,6 +186,30 @@ public class RequisitionFragment extends Fragment {
 
             getActivity().setTitle("Rekvisition: #" + requisition.reqNum);
             progressLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private class UpdateRequisitionFromApi extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            final Requisition updatedReq = new Requisition.Builder()
+                    .basedOn(requisition)
+                    .setStatus(1)
+                    .setFullfilledDate(new Date())
+                    .build();
+            Log.d(TAG, updatedReq.toString());
+            return requisitionRepository.save(updatedReq);
+        }
+
+        @Override
+        protected void onPostExecute(Integer status) {
+            if(status == 200) {
+                new RetrieveRequisitionFromApi().execute();
+            } else {
+                progressLayout.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "Error: " + status, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

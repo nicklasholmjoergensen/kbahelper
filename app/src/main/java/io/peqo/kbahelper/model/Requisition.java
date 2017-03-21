@@ -114,8 +114,10 @@ public final class Requisition {
                     .setId(req.id)
                     .setDescription(req.description)
                     .setOrderDate(req.orderDate)
+                    .setFullfilledDate(req.fulfilledDate)
                     .setReqNum(req.reqNum)
                     .setRunNum(req.runNum)
+                    .setStatus(req.status)
                     .setPatientId(req.patientId)
                     .setRequestorId(req.requestorId);
         }
@@ -132,6 +134,7 @@ public final class Requisition {
                 ", reqNum=" + reqNum +
                 ", runNum=" + runNum +
                 ", orderDate=" + orderDate +
+                ", fulfilledDate=" + fulfilledDate +
                 ", status=" + status +
                 ", patientId=" + patientId +
                 ", requestorId=" + requestorId +
