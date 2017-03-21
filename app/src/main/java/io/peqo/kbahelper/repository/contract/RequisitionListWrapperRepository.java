@@ -7,8 +7,7 @@ import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
 public interface RequisitionListWrapperRepository {
 
     List<RequisitionListWrapper> fetchAll();
+    List<RequisitionListWrapper> fetchAllFinished();
     RequisitionListWrapper fetchObject(Long id);
-    void save(RequisitionListWrapper wrapper);
-    void delete(Long id);
 
 }

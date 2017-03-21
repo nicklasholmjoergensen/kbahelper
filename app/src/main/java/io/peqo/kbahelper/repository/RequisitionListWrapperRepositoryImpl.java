@@ -28,17 +28,19 @@ public class RequisitionListWrapperRepositoryImpl implements RequisitionListWrap
     }
 
     @Override
-    public RequisitionListWrapper fetchObject(Long id) {
+    public List<RequisitionListWrapper> fetchAllFinished() {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            String response = ApiConnection.open(URL + "/done").syncGetRequest();
+            return mapper.readValue(response, new TypeReference<List<RequisitionListWrapper>>(){});
+        } catch(Exception e) {
+            Log.d("DEBUG", "Error: " + e);
+        }
         return null;
     }
 
     @Override
-    public void save(RequisitionListWrapper wrapper) {
-
-    }
-
-    @Override
-    public void delete(Long id) {
-
+    public RequisitionListWrapper fetchObject(Long id) {
+        return null;
     }
 }
