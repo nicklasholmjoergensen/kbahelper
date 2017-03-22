@@ -47,7 +47,7 @@ import io.peqo.kbahelper.repository.SampleRepositoryImpl;
 public class RequisitionFragment extends Fragment {
 
     private static final String TAG = "Requisition Fragment";
-    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
     // Model objects for UI
     private Requisition requisition;
