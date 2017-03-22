@@ -6,4 +6,5 @@
     <color name="colorSuccess">#4baf4f</color>
     <color name="colorDanger">#f44336</color>
     <color name="colorWarning">#ffeb3b</color>
+    <color name="colorPurple">#551A8B</color>
 </resources>

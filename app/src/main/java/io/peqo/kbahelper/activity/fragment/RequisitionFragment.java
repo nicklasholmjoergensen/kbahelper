@@ -1,10 +1,14 @@
 package io.peqo.kbahelper.activity.fragment;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,14 +177,27 @@ public class RequisitionFragment extends Fragment {
             if(samples.size() > 0) {
                 cardViews = new ArrayList<>();
                 for(int i = 0; i < samples.size(); i++) {
+                    final LinearLayout layout = new LinearLayout(getActivity());
                     final CardView card = new CardView(getActivity());
                     final TextView text = new TextView(getActivity());
+                    final ImageView img = new ImageView(getActivity());
+                    LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    layout.setLayoutParams(params);
+                    layout.setPadding(6, 6, 6, 6);
                     card.setUseCompatPadding(true);
                     card.setPadding(12, 12, 12, 12);
+                    img.setBackgroundResource(R.drawable.solid_circle);
+                    Drawable bg = img.getBackground();
+                    ((GradientDrawable) bg.mutate()).setColor(Color.parseColor(samples.get(i).colorCode));
                     text.setText(samples.get(i).name);
                     text.setId(i);
                     text.setPadding(12, 12, 12, 12);
-                    card.addView(text);
+                    layout.addView(img);
+                    layout.addView(text);
+                    card.addView(layout);
                     cardViews.add(card);
                     samplesLayout.addView(card);
                 }
