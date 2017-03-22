@@ -66,4 +66,14 @@ public final class Sample {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Sample{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", colorCode=" + colorCode +
+                ", requisitionId=" + requisitionId +
+                '}';
+    }
 }

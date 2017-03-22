@@ -61,6 +61,9 @@ public class RequisitionFragment extends Fragment {
     // Keep track of samples
     int count = 0;
 
+    // See if bracelet is scanned
+    private boolean braceletScanned;
+
     // Bind views
     @BindView(R.id.layoutReqRequestorContainer) LinearLayout requestorContainer;
     @BindView(R.id.layoutReqRequestorDesc) LinearLayout requestorDescription;
@@ -101,30 +104,29 @@ public class RequisitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_requisition_single, container, false);
         ButterKnife.bind(this, view);
-
         reqId = this.getArguments().getLong("id");
-
         new RetrieveRequisitionFromApi().execute();
-
         return view;
     }
 
     @OnClick(R.id.btnReqScanSample)
     public void scanSample() {
-        new UpdateSampleFromApi().execute();
+        if(braceletScanned) {
+            new UpdateSampleFromApi().execute();
+        } else {
+            Toast.makeText(getActivity(), "Armbånd endnu ikke registreret.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.btnReqScanBracelet)
-    public void scanBracelet() {}
+    public void scanBracelet() {
+        this.braceletScanned = true;
+        Toast.makeText(getActivity(), "Armbånd registreret.", Toast.LENGTH_SHORT).show();
+    }
 
     @OnClick(R.id.layoutReqRequestorContainer)
     public void toggleRequestorInfo() {
         toggleVisibility(requestorDescription);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void toggleVisibility(final View view) {
@@ -168,18 +170,24 @@ public class RequisitionFragment extends Fragment {
             if(!requisition.description.isEmpty()) requisitionDescription.setText(requisition.description);
             if(requisition.fulfilledDate != null) requisitionFulfilledDate.setText(df.format(requisition.fulfilledDate));
 
-            cardViews = new ArrayList<>();
-            for(int i = 0; i < samples.size(); i++) {
-                final CardView card = new CardView(getActivity());
-                final TextView text = new TextView(getActivity());
-                card.setUseCompatPadding(true);
-                card.setPadding(12, 12, 12, 12);
-                text.setText(samples.get(i).name);
-                text.setId(i);
-                text.setPadding(12, 12, 12, 12);
-                card.addView(text);
-                cardViews.add(card);
-                samplesLayout.addView(card);
+            if(samples.size() > 0) {
+                cardViews = new ArrayList<>();
+                for(int i = 0; i < samples.size(); i++) {
+                    final CardView card = new CardView(getActivity());
+                    final TextView text = new TextView(getActivity());
+                    card.setUseCompatPadding(true);
+                    card.setPadding(12, 12, 12, 12);
+                    text.setText(samples.get(i).name);
+                    text.setId(i);
+                    text.setPadding(12, 12, 12, 12);
+                    card.addView(text);
+                    cardViews.add(card);
+                    samplesLayout.addView(card);
+                }
+            }
+
+            if(requisition.status == 2) {
+                Toast.makeText(getActivity(), "Rekvisition afsluttet.", Toast.LENGTH_SHORT).show();
             }
 
             getActivity().setTitle("Rekvisition: #" + requisition.reqNum);
@@ -202,6 +210,8 @@ public class RequisitionFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer status) {
             if(status == 200) {
+                scanBracelet.setEnabled(false);
+                scanSample.setEnabled(false);
                 new RetrieveRequisitionFromApi().execute();
             } else {
                 progressLayout.setVisibility(View.GONE);
@@ -224,7 +234,8 @@ public class RequisitionFragment extends Fragment {
                 CardView card = cardViews.get(count);
                 samplesLayout.removeView(card);
                 count++;
-                if(count == samples.size()-1) {
+                if(count == samples.size()) {
+                    progressLayout.setVisibility(View.VISIBLE);
                     new UpdateRequisitionFromApi().execute();
                 }
             } else {

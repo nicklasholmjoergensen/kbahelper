@@ -61,7 +61,6 @@ public class SampleRepositoryImpl implements SampleRepository {
             Response response = ApiConnection.open(URL)
                     .syncPostRequest(json);
             if (response != null) return response.code();
-            Log.d("DEBUG", json);
         } catch(IOException e) {
             Log.d("DEBUG", "Error: " + e);
         }
