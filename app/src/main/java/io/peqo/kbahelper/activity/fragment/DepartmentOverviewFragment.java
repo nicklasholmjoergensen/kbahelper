@@ -37,6 +37,11 @@ public class DepartmentOverviewFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle("Alle afdelinger");
+    }
+
     public void onBackPressed() {
         FragmentManager manager = getFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
