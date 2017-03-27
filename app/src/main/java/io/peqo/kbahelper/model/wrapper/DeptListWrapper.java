@@ -9,13 +9,13 @@ public class DeptListWrapper {
 
     public final Long id;
     public final String name;
-    public final int unfinishedReq;
+    public final int finishedReq;
     public final int totalReq;
 
     private DeptListWrapper(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-        this.unfinishedReq = builder.unfinishedReq;
+        this.finishedReq = builder.finishedReq;
         this.totalReq = builder.totalReq;
     }
 
@@ -24,7 +24,7 @@ public class DeptListWrapper {
 
         private Long id;
         private String name;
-        private int unfinishedReq;
+        private int finishedReq;
         private int totalReq;
 
         @JsonProperty("id")
@@ -39,13 +39,13 @@ public class DeptListWrapper {
             return this;
         }
 
-        @JsonProperty("unfinished_req")
-        public Builder setUnfinishedReq(int unfinishedReq) {
-            this.unfinishedReq = unfinishedReq;
+        @JsonProperty("finished_req")
+        public Builder setFinishedReq(int finishedReq) {
+            this.finishedReq = finishedReq;
             return this;
         }
 
-        @JsonProperty("finished_req")
+        @JsonProperty("total_req")
         public Builder setTotalReq(int totalReq) {
             this.totalReq = totalReq;
             return this;

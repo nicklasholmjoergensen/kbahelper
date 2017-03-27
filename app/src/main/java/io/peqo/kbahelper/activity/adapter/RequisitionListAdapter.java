@@ -31,6 +31,7 @@ public class RequisitionListAdapter extends BaseAdapter {
         this.requisitions = requisitions;
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(convertView == null) {

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import io.peqo.kbahelper.R;
+import io.peqo.kbahelper.activity.fragment.DepartmentOverviewFragment;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
 
 
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity
         switch(itemId) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                break;
+            case R.id.nav_depts:
+                fragment = new DepartmentOverviewFragment();
                 break;
         }
 
