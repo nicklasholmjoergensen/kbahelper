@@ -47,4 +47,5 @@
     <string name="listDeptText">ud af</string>
     <string name="listDeptTotalReqNum">10</string>
     <string name="listDeptTakenText">rekvisitioner færdige</string>
+    <string name="listDeptOverviewBtnAssist">Assistér</string>
 </resources>
