@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
@@ -141,6 +143,14 @@ public class RequisitionFragment extends Fragment {
             expandRequestor.setImageResource(R.drawable.ic_expand_more_black_24dp);
             view.setVisibility(View.GONE);
         }
+    }
+
+    public void onBackPressed() {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.remove(this);
+        ft.commit();
+        manager.popBackStack();
     }
 
     private class RetrieveRequisitionFromApi extends AsyncTask<Void, Void, Void> {
