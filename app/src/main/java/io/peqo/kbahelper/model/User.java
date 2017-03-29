@@ -8,39 +8,27 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public final class User {
 
     public final Long id;
-    public final String uuid;
     public final String firstName;
     public final String lastName;
     public final String username;
-    public final String password;
 
     private User(Builder builder) {
         this.id = builder.id;
-        this.uuid = builder.uuid;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.username = builder.username;
-        this.password = builder.password;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
-        private String uuid;
         private String firstName;
         private String lastName;
         private String username;
-        private String password;
 
         @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
-            return this;
-        }
-
-        @JsonProperty("uuid")
-        public Builder setUuid(String uuid) {
-            this.uuid = uuid;
             return this;
         }
 
@@ -59,12 +47,6 @@ public final class User {
         @JsonProperty("username")
         public Builder setUsername(String username) {
             this.username = username;
-            return this;
-        }
-
-        @JsonProperty("password")
-        public Builder setPassword(String password) {
-            this.password = password;
             return this;
         }
 

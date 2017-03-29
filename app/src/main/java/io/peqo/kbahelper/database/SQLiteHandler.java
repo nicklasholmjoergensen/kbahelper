@@ -1,8 +1,13 @@
 package io.peqo.kbahelper.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import io.peqo.kbahelper.model.User;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
@@ -13,20 +18,84 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String COL_ID = "id";
     private static final String COL_FIRSTNAME = "first_name";
     private static final String COL_LASTNAME = "last_name";
-    private static final String COL_EMAIL = "email";
-    private static final String COL_UUID = "uuid";
+    private static final String COL_USERNAME = "username";
 
     public SQLiteHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase db) {
+        final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + COL_ID + " INTEGER PRIMARY KEY, "
+                + COL_FIRSTNAME + " VARCHAR(50), "
+                + COL_LASTNAME + " VARCHAR(50), "
+                + COL_USERNAME + " VARCHAR(50)"
+                + ");";
+        db.execSQL(CREATE_TABLE);
+        Log.d(TAG, "Database table created");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLES IF EXISTS " + TABLE_NAME);
+    }
 
+    /**
+     * Store user details in database
+     */
+
+    public void addUser(User user) {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+
+        v.put(COL_ID, user.id);
+        v.put(COL_FIRSTNAME, user.firstName);
+        v.put(COL_LASTNAME, user.lastName);
+        v.put(COL_USERNAME, user.username);
+
+        // Insert row
+        long id = db.insert(TABLE_NAME, null, v);
+        db.close();
+
+        Log.d(TAG, "New row inserted: " + id);
+    }
+
+    /**
+     * Fetch user details from database
+     */
+
+    public User getUser() {
+        final SQLiteDatabase db = this.getReadableDatabase();
+        final String q = "SELECT * FROM " + TABLE_NAME;
+        final Cursor cursor = db.rawQuery(q, null);
+
+        cursor.moveToFirst();
+        if(cursor.getCount() > 0) {
+            User user = new User.Builder()
+                    .setId(cursor.getLong(0))
+                    .setFirstName(cursor.getString(1))
+                    .setLastName(cursor.getString(2))
+                    .setUsername(cursor.getString(3))
+                    .build();
+            cursor.close();
+            db.close();
+            return user;
+        }
+        cursor.close();
+        db.close();
+        return null;
+    }
+
+    /**
+     * Delete user details in database
+     */
+
+    public void deleteUser() {
+        final SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+        db.close();
+
+        Log.d(TAG, "User deleted from database.");
     }
 }
