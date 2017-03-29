@@ -19,6 +19,7 @@ public final class Requisition {
     public final Long id;
     public final Long patientId;
     public final Long requestorId;
+    public final Long userId;
     public final int reqNum;
     public final int runNum;
     public final int status;
@@ -28,14 +29,15 @@ public final class Requisition {
 
     private Requisition(Builder builder) {
         this.id = builder.id;
+        this.patientId = builder.patientId;
+        this.requestorId = builder.requestorId;
+        this.userId = builder.userId;
         this.reqNum = builder.reqNum;
         this.runNum = builder.runNum;
         this.orderDate = builder.orderDate;
         this.fulfilledDate = builder.fulfilledDate;
         this.status = builder.status;
         this.description = builder.description;
-        this.patientId = builder.patientId;
-        this.requestorId = builder.requestorId;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
@@ -43,6 +45,7 @@ public final class Requisition {
         private Long id;
         private Long patientId;
         private Long requestorId;
+        private Long userId;
         private int reqNum;
         private int runNum;
         private int status;
@@ -55,6 +58,24 @@ public final class Requisition {
         @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        @JsonProperty("patient_id")
+        public Builder setPatientId(Long patientId) {
+            this.patientId = patientId;
+            return this;
+        }
+
+        @JsonProperty("requestor_id")
+        public Builder setRequestorId(Long requestorId) {
+            this.requestorId = requestorId;
+            return this;
+        }
+
+        @JsonProperty("user_id")
+        public Builder setUserId(Long userId) {
+            this.userId = userId;
             return this;
         }
 
@@ -87,18 +108,6 @@ public final class Requisition {
         @JsonProperty("status")
         public Builder setStatus(int status) {
             this.status = status;
-            return this;
-        }
-
-        @JsonProperty("patient_id")
-        public Builder setPatientId(Long patientId) {
-            this.patientId = patientId;
-            return this;
-        }
-
-        @JsonProperty("requestor_id")
-        public Builder setRequestorId(Long requestorId) {
-            this.requestorId = requestorId;
             return this;
         }
 
