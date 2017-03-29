@@ -121,9 +121,9 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
                 finish();
             } else {
-                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "Prøv venligst igen.", Toast.LENGTH_SHORT).show();
             }
+            dialog.dismiss();
         }
     }
 }

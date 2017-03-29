@@ -51,4 +51,9 @@
     <string name="loginHintUsername">Brugernavn</string>
     <string name="loginTextPassword">Kodeord</string>
     <string name="loginTextLogin">Login</string>
+    <string name="menuTextHome">Hjem</string>
+    <string name="menuTextDepartments">Afdelinger</string>
+    <string name="menuTextLogout">Log ud</string>
+    <string name="menuTextName">John Doe</string>
+    <string name="menuTextUsername">john@doe.com</string>
 </resources>

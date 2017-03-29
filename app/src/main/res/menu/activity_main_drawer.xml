@@ -5,11 +5,15 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="Hjem" />
+            android:title="@string/menuTextHome" />
         <item
             android:id="@+id/nav_depts"
             android:icon="@drawable/ic_info_black_24dp"
-            android:title="Afdelinger" />
+            android:title="@string/menuTextDepartments" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/menuTextLogout" />
     </group>
 
 </menu>

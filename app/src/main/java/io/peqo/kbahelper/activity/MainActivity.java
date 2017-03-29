@@ -1,5 +1,6 @@
 package io.peqo.kbahelper.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.MenuItem;
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.fragment.DepartmentOverviewFragment;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
+import io.peqo.kbahelper.database.SQLiteHandler;
+import io.peqo.kbahelper.util.SessionManager;
 
 
 public class MainActivity extends AppCompatActivity
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private SQLiteHandler db;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        session = new SessionManager(getApplicationContext());
+        db = new SQLiteHandler(getApplicationContext());
 
         HomeFragment homeFragment = new HomeFragment();
 
@@ -80,6 +88,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_depts:
                 fragment = new DepartmentOverviewFragment();
                 break;
+            case R.id.nav_logout:
+                session.setLogin(false);
+                db.deleteUser();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
         }
 
         if(fragment != null) {
