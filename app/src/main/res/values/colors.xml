@@ -7,4 +7,6 @@
     <color name="colorDanger">#f44336</color>
     <color name="colorWarning">#ffeb3b</color>
     <color name="colorPurple">#551A8B</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDarkGrey">#222222</color>
 </resources>
