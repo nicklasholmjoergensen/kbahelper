@@ -11,12 +11,14 @@ public final class User {
     public final String firstName;
     public final String lastName;
     public final String username;
+    public final String email;
 
     private User(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.username = builder.username;
+        this.email = builder.email;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
@@ -25,6 +27,7 @@ public final class User {
         private String firstName;
         private String lastName;
         private String username;
+        private String email;
 
         @JsonProperty("id")
         public Builder setId(Long id) {
@@ -47,6 +50,12 @@ public final class User {
         @JsonProperty("username")
         public Builder setUsername(String username) {
             this.username = username;
+            return this;
+        }
+
+        @JsonProperty("email")
+        public Builder setEmail(String email) {
+            this.email = email;
             return this;
         }
 

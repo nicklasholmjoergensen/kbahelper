@@ -1,6 +1,7 @@
 package io.peqo.kbahelper.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.fragment.DepartmentOverviewFragment;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
 import io.peqo.kbahelper.database.SQLiteHandler;
+import io.peqo.kbahelper.model.User;
 import io.peqo.kbahelper.util.SessionManager;
 
 
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity
 
     private SQLiteHandler db;
     private SessionManager session;
+
+    private TextView fullName;
+    private TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +51,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+        fullName = (TextView) header.findViewById(R.id.drawerTopName);
+        email = (TextView) header.findViewById(R.id.drawerTopEmail);
+
         session = new SessionManager(getApplicationContext());
         db = new SQLiteHandler(getApplicationContext());
+
+        new UpdateHeaderInformation().execute();
 
         HomeFragment homeFragment = new HomeFragment();
 
@@ -105,5 +118,19 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private class UpdateHeaderInformation extends AsyncTask<Void, Void, User> {
+
+        @Override
+        protected User doInBackground(Void... voids) {
+            return db.getUser();
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            fullName.setText(user.firstName + " " + user.lastName);
+            email.setText(user.email);
+        }
     }
 }

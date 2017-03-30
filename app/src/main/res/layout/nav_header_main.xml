@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/drawerTopUsername"
+        android:id="@+id/drawerTopEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/menuTextUsername" />

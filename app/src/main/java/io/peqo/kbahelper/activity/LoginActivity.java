@@ -109,6 +109,7 @@ public class LoginActivity extends Activity {
                                 .setFirstName(obj.getString("first_name"))
                                 .setLastName(obj.getString("last_name"))
                                 .setUsername(obj.getString("username"))
+                                .setEmail(obj.getString("email"))
                                 .build();
                         db.addUser(user);
                         return true;
@@ -121,8 +122,8 @@ public class LoginActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if(result) {
+        protected void onPostExecute(Boolean success) {
+            if(success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

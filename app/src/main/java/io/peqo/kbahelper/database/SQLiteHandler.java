@@ -12,13 +12,14 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "kba_helper";
     private static final String TABLE_NAME = "user";
     private static final String COL_ID = "id";
     private static final String COL_FIRSTNAME = "first_name";
     private static final String COL_LASTNAME = "last_name";
     private static final String COL_USERNAME = "username";
+    private static final String COL_EMAIL = "email";
 
     public SQLiteHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -30,14 +31,15 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + COL_ID + " INTEGER PRIMARY KEY, "
                 + COL_FIRSTNAME + " VARCHAR(50), "
                 + COL_LASTNAME + " VARCHAR(50), "
-                + COL_USERNAME + " VARCHAR(50)"
+                + COL_USERNAME + " VARCHAR(50), "
+                + COL_EMAIL + " VARCHAR(50)"
                 + ");";
         db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLES IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
     /**
@@ -52,6 +54,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         v.put(COL_FIRSTNAME, user.firstName);
         v.put(COL_LASTNAME, user.lastName);
         v.put(COL_USERNAME, user.username);
+        v.put(COL_EMAIL, user.email);
 
         db.insert(TABLE_NAME, null, v);
         db.close();
@@ -73,6 +76,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     .setFirstName(cursor.getString(1))
                     .setLastName(cursor.getString(2))
                     .setUsername(cursor.getString(3))
+                    .setEmail(cursor.getString(4))
                     .build();
             cursor.close();
             db.close();
