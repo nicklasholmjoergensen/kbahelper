@@ -2,7 +2,6 @@ package io.peqo.kbahelper.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class SessionManager {
 
@@ -25,7 +24,6 @@ public class SessionManager {
     public void setLogin(final boolean isLoggedIn) {
         editor.putBoolean(KEY_IS_LOGGEDIN, isLoggedIn);
         editor.commit();
-        Log.d(TAG, "User Login Session modified");
     }
 
     public boolean isLoggedIn() {

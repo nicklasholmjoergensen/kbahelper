@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KBAHelper</string>
+    <string name="app_name">KBAssist</string>
     <string name="title_activity_req">ReqActivity</string>
     <string name="title_activity_main_drawer">MainDrawerActivity</string>
 
@@ -56,4 +56,5 @@
     <string name="menuTextLogout">Log ud</string>
     <string name="menuTextName">John Doe</string>
     <string name="menuTextUsername">john@doe.com</string>
+    <string name="loginTextAppName">KBAssist</string>
 </resources>

@@ -2,6 +2,7 @@ package io.peqo.kbahelper.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import io.peqo.kbahelper.model.User;
 import io.peqo.kbahelper.network.ApiConnection;
 import io.peqo.kbahelper.util.SessionManager;
 import okhttp3.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends Activity {
 
@@ -58,6 +60,11 @@ public class LoginActivity extends Activity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(base));
     }
 
     @OnClick(R.id.login_btn)

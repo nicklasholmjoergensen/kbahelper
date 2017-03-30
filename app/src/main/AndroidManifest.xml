@@ -9,8 +9,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.LoginActivity"
-            android:label="KBAHelper">
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -18,7 +19,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:label="KBAHelper">
+            android:label="@string/app_name">
         </activity>
     </application>
 </manifest>

@@ -48,7 +48,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Hjem");
+        getActivity().setTitle("Mine rekvisitioner");
     }
 
     private class RetrieveRequisitionListFromApi extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
