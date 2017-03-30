@@ -17,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.adapter.RequisitionListAdapter;
+import io.peqo.kbahelper.database.SQLiteHandler;
+import io.peqo.kbahelper.model.User;
 import io.peqo.kbahelper.model.wrapper.RequisitionListWrapper;
 import io.peqo.kbahelper.repository.RequisitionListWrapperRepositoryImpl;
 import io.peqo.kbahelper.repository.contract.RequisitionListWrapperRepository;
@@ -25,7 +27,8 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
     public static final String TAG = "Home fragment";
 
-    private RequisitionListWrapperRepository requisitionRepository = new RequisitionListWrapperRepositoryImpl();
+    private RequisitionListWrapperRepository requisitionRepository;
+    private SQLiteHandler db;
 
     @BindView(R.id.requisitionList) ListView requisitionList;
 
@@ -36,6 +39,8 @@ public class HomeFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        requisitionRepository = new RequisitionListWrapperRepositoryImpl();
+        db = new SQLiteHandler(getContext());
         new RetrieveRequisitionListFromApi().execute();
         return view;
     }
@@ -50,7 +55,8 @@ public class HomeFragment extends android.support.v4.app.Fragment {
 
         @Override
         protected List<RequisitionListWrapper> doInBackground(Void... voids) {
-            return requisitionRepository.fetchAll();
+            User user = db.getUser();
+            return requisitionRepository.fetchAllFromUser(user.id);
         }
 
         @Override

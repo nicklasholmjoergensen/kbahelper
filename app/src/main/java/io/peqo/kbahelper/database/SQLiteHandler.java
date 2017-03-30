@@ -5,13 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import io.peqo.kbahelper.model.User;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
+
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "kba_helper";
     private static final String TABLE_NAME = "user";
@@ -33,7 +33,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + COL_USERNAME + " VARCHAR(50)"
                 + ");";
         db.execSQL(CREATE_TABLE);
-        Log.d(TAG, "Database table created");
     }
 
     @Override
@@ -54,11 +53,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         v.put(COL_LASTNAME, user.lastName);
         v.put(COL_USERNAME, user.username);
 
-        // Insert row
-        long id = db.insert(TABLE_NAME, null, v);
+        db.insert(TABLE_NAME, null, v);
         db.close();
-
-        Log.d(TAG, "New row inserted: " + id);
     }
 
     /**
@@ -95,7 +91,5 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         final SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, null, null);
         db.close();
-
-        Log.d(TAG, "User deleted from database.");
     }
 }

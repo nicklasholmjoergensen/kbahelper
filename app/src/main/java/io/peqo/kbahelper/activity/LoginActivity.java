@@ -90,7 +90,6 @@ public class LoginActivity extends Activity {
             try {
                 Response response = ApiConnection.open("http://207.154.199.94/api/login")
                         .syncPostRequest(mapper.writeValueAsString(data));
-                Log.d("TAG", "Posted data to server: " + mapper.writeValueAsString(data));
 
                 if (response != null && response.isSuccessful()) {
                     JSONObject obj = new JSONObject(response.body().string());

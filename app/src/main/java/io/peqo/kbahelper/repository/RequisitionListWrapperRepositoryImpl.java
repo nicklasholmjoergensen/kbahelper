@@ -40,6 +40,18 @@ public class RequisitionListWrapperRepositoryImpl implements RequisitionListWrap
     }
 
     @Override
+    public List<RequisitionListWrapper> fetchAllFromUser(Long id) {
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            String response = ApiConnection.open(URL + "/" + id).syncGetRequest();
+            return mapper.readValue(response, new TypeReference<List<RequisitionListWrapper>>(){});
+        } catch(Exception e) {
+            Log.d("DEBUG", "Error: " + e);
+        }
+        return null;
+    }
+
+    @Override
     public RequisitionListWrapper fetchObject(Long id) {
         return null;
     }
