@@ -8,16 +8,19 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public final class Department {
 
     public final Long id;
+    public final Long teamId;
     public final String name;
 
     private Department(Builder builder) {
         this.id = builder.id;
+        this.teamId = builder.teamId;
         this.name = builder.name;
     }
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
+        private Long teamId;
         private String name;
 
         public Builder() {}
@@ -25,6 +28,12 @@ public final class Department {
         @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        @JsonProperty("team_id")
+        public Builder setTeamId(Long teamId) {
+            this.teamId = teamId;
             return this;
         }
 

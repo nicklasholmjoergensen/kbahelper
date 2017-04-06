@@ -12,7 +12,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String DB_NAME = "kba_helper";
     private static final String TABLE_NAME = "user";
     private static final String COL_ID = "id";
@@ -20,6 +20,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String COL_LASTNAME = "last_name";
     private static final String COL_USERNAME = "username";
     private static final String COL_EMAIL = "email";
+    private static final String COL_TEAM_ID = "team_id";
 
     public SQLiteHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -32,7 +33,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + COL_FIRSTNAME + " VARCHAR(50), "
                 + COL_LASTNAME + " VARCHAR(50), "
                 + COL_USERNAME + " VARCHAR(50), "
-                + COL_EMAIL + " VARCHAR(50)"
+                + COL_EMAIL + " VARCHAR(50), "
+                + COL_TEAM_ID + " INTEGER"
                 + ");";
         db.execSQL(CREATE_TABLE);
     }
@@ -55,6 +57,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         v.put(COL_LASTNAME, user.lastName);
         v.put(COL_USERNAME, user.username);
         v.put(COL_EMAIL, user.email);
+        v.put(COL_TEAM_ID, user.teamId);
 
         db.insert(TABLE_NAME, null, v);
         db.close();
