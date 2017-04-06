@@ -1,5 +1,6 @@
 package io.peqo.kbahelper.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -29,6 +30,7 @@ public class Team {
     public static class Builder {
         private Long id;
 
+        @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
             return this;
