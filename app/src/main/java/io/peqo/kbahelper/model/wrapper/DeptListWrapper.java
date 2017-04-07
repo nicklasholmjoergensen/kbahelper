@@ -8,12 +8,14 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 public class DeptListWrapper {
 
     public final Long id;
+    public final Long teamId;
     public final String name;
     public final int finishedReq;
     public final int totalReq;
 
     private DeptListWrapper(Builder builder) {
         this.id = builder.id;
+        this.teamId = builder.teamId;
         this.name = builder.name;
         this.finishedReq = builder.finishedReq;
         this.totalReq = builder.totalReq;
@@ -21,8 +23,8 @@ public class DeptListWrapper {
 
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
-
         private Long id;
+        private Long teamId;
         private String name;
         private int finishedReq;
         private int totalReq;
@@ -30,6 +32,12 @@ public class DeptListWrapper {
         @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        @JsonProperty("team_id")
+        public Builder setTeamId(Long teamId) {
+            this.teamId = teamId;
             return this;
         }
 
