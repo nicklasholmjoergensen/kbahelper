@@ -228,7 +228,7 @@ public class RequisitionFragment extends Fragment {
         protected Integer doInBackground(Void... voids) {
             final Requisition updatedReq = new Requisition.Builder()
                     .basedOn(requisition)
-                    .setStatus(2)
+                    .setStatus(3)
                     .setFullfilledDate(new Date())
                     .build();
             return requisitionRepository.save(updatedReq);
