@@ -80,6 +80,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                     .setLastName(cursor.getString(2))
                     .setUsername(cursor.getString(3))
                     .setEmail(cursor.getString(4))
+                    .setTeamId(cursor.getLong(5))
                     .build();
             cursor.close();
             db.close();

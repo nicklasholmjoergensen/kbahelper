@@ -110,6 +110,7 @@ public class LoginActivity extends Activity {
                                 .setLastName(obj.getString("last_name"))
                                 .setUsername(obj.getString("username"))
                                 .setEmail(obj.getString("email"))
+                                .setTeamId(obj.getLong("team_id"))
                                 .build();
                         db.addUser(user);
                         return true;

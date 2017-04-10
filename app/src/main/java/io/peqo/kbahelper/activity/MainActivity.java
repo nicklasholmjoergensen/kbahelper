@@ -11,17 +11,26 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.peqo.kbahelper.R;
 import io.peqo.kbahelper.activity.fragment.DepartmentOverviewFragment;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
 import io.peqo.kbahelper.database.SQLiteHandler;
 import io.peqo.kbahelper.model.User;
+import io.peqo.kbahelper.network.ApiConnection;
 import io.peqo.kbahelper.util.SessionManager;
+import okhttp3.Response;
 
 
 public class MainActivity extends AppCompatActivity
@@ -102,11 +111,8 @@ public class MainActivity extends AppCompatActivity
                 fragment = new DepartmentOverviewFragment();
                 break;
             case R.id.nav_logout:
-                session.setLogin(false);
-                db.deleteUser();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                new Logout().execute();
+                break;
         }
 
         if(fragment != null) {
@@ -131,6 +137,37 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(User user) {
             fullName.setText(user.firstName + " " + user.lastName);
             email.setText(user.email);
+        }
+    }
+
+    private class Logout extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            final ObjectMapper mapper = new ObjectMapper();
+            final User user = db.getUser();
+
+            Map<String, String> data = new HashMap<>();
+            data.put("username", user.username);
+
+            try {
+                Response response = ApiConnection.open("http://207.154.199.94/api/logout")
+                        .syncPostRequest(mapper.writeValueAsString(data));
+                if (response != null && response.isSuccessful()) {
+                    session.setLogin(false);
+                    db.deleteUser();
+                }
+            } catch(IOException e) {
+                Log.d("Logout", "Error: " + e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
