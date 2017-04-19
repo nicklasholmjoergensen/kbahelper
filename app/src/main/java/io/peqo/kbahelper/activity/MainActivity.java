@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.peqo.kbahelper.R;
-import io.peqo.kbahelper.activity.fragment.DepartmentOverviewFragment;
 import io.peqo.kbahelper.activity.fragment.HomeFragment;
+import io.peqo.kbahelper.activity.fragment.TeamOverviewFragment;
 import io.peqo.kbahelper.database.SQLiteHandler;
 import io.peqo.kbahelper.model.User;
 import io.peqo.kbahelper.network.ApiConnection;
@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 break;
-            case R.id.nav_depts:
-                fragment = new DepartmentOverviewFragment();
+            case R.id.nav_teams:
+                fragment = new TeamOverviewFragment();
                 break;
             case R.id.nav_logout:
                 new Logout().execute();

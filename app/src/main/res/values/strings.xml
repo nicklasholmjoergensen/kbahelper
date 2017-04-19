@@ -57,4 +57,5 @@
     <string name="menuTextName">John Doe</string>
     <string name="menuTextUsername">john@doe.com</string>
     <string name="loginTextAppName">KBAssist</string>
+    <string name="nav_teams">Teams</string>
 </resources>
