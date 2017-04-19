@@ -25,13 +25,6 @@
                 android:textSize="18sp"
                 android:text="@string/list_req_overview_title"
                 android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/requistionListPatientCpr"
-                android:layout_marginTop="6dp"
-                android:text="@string/list_req_overview_cpr"
-                android:layout_marginStart="12dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

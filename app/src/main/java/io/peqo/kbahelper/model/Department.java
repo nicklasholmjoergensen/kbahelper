@@ -9,10 +9,12 @@ public final class Department {
 
     public final Long id;
     public final Long teamId;
+    public final int finishOrder;
     public final String name;
 
     private Department(Builder builder) {
         this.id = builder.id;
+        this.finishOrder = builder.finishOrder;
         this.teamId = builder.teamId;
         this.name = builder.name;
     }
@@ -20,6 +22,7 @@ public final class Department {
     @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private Long id;
+        private int finishOrder;
         private Long teamId;
         private String name;
 
@@ -28,6 +31,12 @@ public final class Department {
         @JsonProperty("id")
         public Builder setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        @JsonProperty("finish_order")
+        public Builder setFinishOrder(int finishOrder) {
+            this.finishOrder = finishOrder;
             return this;
         }
 

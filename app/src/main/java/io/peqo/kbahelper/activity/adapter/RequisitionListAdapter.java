@@ -21,7 +21,6 @@ public class RequisitionListAdapter extends BaseAdapter {
     private List<RequisitionListWrapper> requisitions;
 
     @BindView(R.id.requistionListPatientName) TextView patientName;
-    @BindView(R.id.requistionListPatientCpr) TextView patientCpr;
     @BindView(R.id.listReqOverviewDept) TextView patientDept;
     @BindView(R.id.listReqOverviewRoom) TextView patientRoom;
     @BindView(R.id.listReqOverviewBed) TextView patientBed;
@@ -41,7 +40,6 @@ public class RequisitionListAdapter extends BaseAdapter {
 
         RequisitionListWrapper obj = (RequisitionListWrapper) getItem(position);
         patientName.setText(obj.firstName + " " + obj.lastName);
-        patientCpr.setText(obj.cprNumber);
         patientDept.setText(obj.department);
         patientRoom.setText(String.valueOf(obj.roomNumber));
         patientBed.setText(String.valueOf(obj.bedNumber));

@@ -41,7 +41,7 @@
     <string name="list_req_overview_bed">Seng:</string>
     <string name="list_req_overview_bed_number">2</string>
     <string name="reqLabelDescription">Pt. oplysninger:</string>
-    <string name="reqTextDescription">N/A</string>
+    <string name="reqTextDescription">Ingen yderligere oplysninger.</string>
     <string name="list_department_name">Department name</string>
     <string name="listDeptUnfinishedNum">0</string>
     <string name="listDeptText">ud af</string>
