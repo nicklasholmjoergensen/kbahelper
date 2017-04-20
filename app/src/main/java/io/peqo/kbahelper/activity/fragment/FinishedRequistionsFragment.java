@@ -43,6 +43,12 @@ public class FinishedRequistionsFragment extends android.support.v4.app.Fragment
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Afsluttede rekvisitioner");
+    }
+
     private class RetrieveRequisitionListFromApi extends AsyncTask<Void, Void, List<RequisitionListWrapper>> {
 
         @Override
