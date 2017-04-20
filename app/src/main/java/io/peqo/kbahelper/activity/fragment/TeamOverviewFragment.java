@@ -40,8 +40,6 @@ public class TeamOverviewFragment extends Fragment {
 
     @BindView(R.id.teamList) ListView teamList;
 
-    private Button assistButton;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

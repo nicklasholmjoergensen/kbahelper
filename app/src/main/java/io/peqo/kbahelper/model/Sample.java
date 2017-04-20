@@ -9,6 +9,7 @@ public final class Sample {
 
     public final Long id;
     public final String name;
+    public final String amount;
     public final int status;
     public final String colorCode;
     public final Long requisitionId;
@@ -16,6 +17,7 @@ public final class Sample {
     private Sample(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
+        this.amount = builder.amount;
         this.status = builder.status;
         this.colorCode = builder.colorCode;
         this.requisitionId = builder.requisitionId;
@@ -25,6 +27,7 @@ public final class Sample {
     public static class Builder {
         private Long id;
         private String name;
+        private String amount;
         private int status;
         private String colorCode;
         private Long requisitionId;
@@ -40,6 +43,12 @@ public final class Sample {
         @JsonProperty("name")
         public Builder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        @JsonProperty("amount")
+        public Builder setAmount(String amount) {
+            this.amount = amount;
             return this;
         }
 

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
@@ -46,6 +47,8 @@ import io.peqo.kbahelper.repository.RequisitionRepositoryImpl;
 import io.peqo.kbahelper.repository.RoomRepositoryImpl;
 import io.peqo.kbahelper.repository.SampleRepositoryImpl;
 
+import static io.peqo.kbahelper.R.color.colorWhite;
+
 public class RequisitionFragment extends Fragment {
 
     private static final String TAG = "Requisition Fragment";
@@ -59,7 +62,7 @@ public class RequisitionFragment extends Fragment {
     private Department department;
     private Requestor requestor;
     private List<Sample> samples;
-    private List<CardView> cardViews;
+    private List<TextView> textViews;
 
     // Requisition ID passed from activity
     private Long reqId;
@@ -185,35 +188,27 @@ public class RequisitionFragment extends Fragment {
             if(requisition.fulfilledDate != null) requisitionFulfilledDate.setText(df.format(requisition.fulfilledDate));
 
             if(samples.size() > 0) {
-                cardViews = new ArrayList<>();
+                textViews = new ArrayList<>();
                 for(int i = 0; i < samples.size(); i++) {
-                    final LinearLayout layout = new LinearLayout(getActivity());
-                    final CardView card = new CardView(getActivity());
                     final TextView text = new TextView(getActivity());
-                    final ImageView img = new ImageView(getActivity());
-                    LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(
+                    final LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT
                     );
-                    layout.setLayoutParams(params);
-                    layout.setPadding(6, 6, 6, 6);
-                    card.setUseCompatPadding(true);
-                    card.setPadding(12, 12, 12, 12);
-                    img.setBackgroundResource(R.drawable.solid_circle);
-                    Drawable bg = img.getBackground();
-                    ((GradientDrawable) bg.mutate()).setColor(Color.parseColor(samples.get(i).colorCode));
-                    text.setText(samples.get(i).name);
+                    llp.setMargins(0, 0, 20, 0);
+                    text.setLayoutParams(llp);
+                    text.setBackgroundColor(Color.parseColor(samples.get(i).colorCode));
+                    text.setText(samples.get(i).amount);
+                    text.setTextColor(ContextCompat.getColor(getContext(), colorWhite));
+                    text.setTextSize(18);
                     text.setId(i);
                     text.setPadding(12, 12, 12, 12);
-                    layout.addView(img);
-                    layout.addView(text);
-                    card.addView(layout);
-                    cardViews.add(card);
-                    samplesLayout.addView(card);
+                    textViews.add(text);
+                    samplesLayout.addView(text);
                 }
             }
 
-            if(requisition.status == 2) {
+            if(requisition.status == 3) {
                 Toast.makeText(getActivity(), "Rekvisition afsluttet.", Toast.LENGTH_SHORT).show();
             }
 
@@ -258,8 +253,8 @@ public class RequisitionFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer status) {
             if(status == 200) {
-                CardView card = cardViews.get(count);
-                samplesLayout.removeView(card);
+                TextView text = textViews.get(count);
+                samplesLayout.removeView(text);
                 count++;
                 if(count == samples.size()) {
                     progressLayout.setVisibility(View.VISIBLE);
