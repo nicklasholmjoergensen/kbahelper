@@ -9,12 +9,14 @@ public class TeamListWrapper {
 
     public final Long id;
     public final String name;
+    public final int numUsers;
     public final int finishedReq;
     public final int totalReq;
 
     private TeamListWrapper(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
+        this.numUsers = builder.numUsers;
         this.finishedReq = builder.finishedReq;
         this.totalReq = builder.totalReq;
     }
@@ -24,6 +26,7 @@ public class TeamListWrapper {
 
         private Long id;
         private String name;
+        private int numUsers;
         private int finishedReq;
         private int totalReq;
 
@@ -36,6 +39,12 @@ public class TeamListWrapper {
         @JsonProperty("name")
         public Builder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        @JsonProperty("num_users")
+        public Builder setNumUsers(int numUsers) {
+            this.numUsers = numUsers;
             return this;
         }
 

@@ -60,4 +60,6 @@
     <string name="nav_teams">Teams</string>
     <string name="req_finished_icon">reqFinishedIcon</string>
     <string name="menu_req_done">Afsluttede rekvisitioner</string>
+    <string name="team_list_name">Team name</string>
+    <string name="team_list_num_users_desc">aktiv(e) prøvetagere</string>
 </resources>

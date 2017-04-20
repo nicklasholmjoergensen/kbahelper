@@ -68,6 +68,7 @@ public class TeamOverviewFragment extends Fragment {
         private List<TeamListWrapper> teams;
 
         @BindView(R.id.teamListName) TextView teamName;
+        @BindView(R.id.teamListNumUsers) TextView numUsers;
         @BindView(R.id.teamListFinishedReq) TextView finishedReq;
         @BindView(R.id.teamListTotalReq) TextView totalReq;
         @BindView(R.id.teamListAssistBtn) Button assistBtn;
@@ -87,6 +88,7 @@ public class TeamOverviewFragment extends Fragment {
 
             TeamListWrapper team = (TeamListWrapper) getItem(i);
             teamName.setText(team.name);
+            numUsers.setText(String.valueOf(team.numUsers));
             finishedReq.setText(String.valueOf(team.finishedReq));
             totalReq.setText(String.valueOf(team.totalReq));
 
