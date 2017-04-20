@@ -8,6 +8,7 @@ public interface RequisitionListWrapperRepository {
 
     List<RequisitionListWrapper> fetchAll();
     List<RequisitionListWrapper> fetchAllFinished();
+    List<RequisitionListWrapper> fetchAllFinishedFromUser(Long id);
     List<RequisitionListWrapper> fetchAllFromUser(Long id);
     RequisitionListWrapper fetchObject(Long id);
 

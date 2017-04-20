@@ -59,4 +59,5 @@
     <string name="loginTextAppName">KBAssist</string>
     <string name="nav_teams">Teams</string>
     <string name="req_finished_icon">reqFinishedIcon</string>
+    <string name="menu_req_done">Afsluttede rekvisitioner</string>
 </resources>
