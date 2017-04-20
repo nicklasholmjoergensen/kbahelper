@@ -58,4 +58,5 @@
     <string name="menuTextUsername">john@doe.com</string>
     <string name="loginTextAppName">KBAssist</string>
     <string name="nav_teams">Teams</string>
+    <string name="req_finished_icon">reqFinishedIcon</string>
 </resources>

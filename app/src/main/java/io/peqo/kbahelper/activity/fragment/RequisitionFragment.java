@@ -48,6 +48,8 @@ import io.peqo.kbahelper.repository.RoomRepositoryImpl;
 import io.peqo.kbahelper.repository.SampleRepositoryImpl;
 
 import static io.peqo.kbahelper.R.color.colorWhite;
+import static io.peqo.kbahelper.R.drawable.ic_done_black_24dp;
+import static io.peqo.kbahelper.R.drawable.ic_done_green_24dp;
 
 public class RequisitionFragment extends Fragment {
 
@@ -78,6 +80,7 @@ public class RequisitionFragment extends Fragment {
     @BindView(R.id.layoutReqRequestorDesc) LinearLayout requestorDescription;
     @BindView(R.id.btnReqExpand) ImageView expandRequestor;
     @BindView(R.id.layoutReqSamples) LinearLayout samplesLayout;
+    @BindView(R.id.reqFinishIcon) LinearLayout reqFinishIcon;
     @BindView(R.id.btnReqScanBracelet) Button scanBracelet;
     @BindView(R.id.btnReqScanSample) Button scanSample;
     @BindView(R.id.textReqPatientName) TextView patientName;
@@ -209,6 +212,16 @@ public class RequisitionFragment extends Fragment {
             }
 
             if(requisition.status == 3) {
+                final ImageView img = new ImageView(getActivity());
+                final LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                );
+                img.setLayoutParams(llp);
+                img.setImageResource(ic_done_green_24dp);
+
+                reqFinishIcon.addView(img);
+
                 Toast.makeText(getActivity(), "Rekvisition afsluttet.", Toast.LENGTH_SHORT).show();
             }
 
