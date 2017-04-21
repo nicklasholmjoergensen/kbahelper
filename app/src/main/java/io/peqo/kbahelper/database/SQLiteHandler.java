@@ -12,7 +12,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String DB_NAME = "kba_helper";
     private static final String TABLE_NAME = "user";
     private static final String COL_ID = "id";
