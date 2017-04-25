@@ -28,6 +28,7 @@ import io.peqo.kbahelper.database.SQLiteHandler;
 import io.peqo.kbahelper.model.User;
 import io.peqo.kbahelper.network.ApiConnection;
 import io.peqo.kbahelper.util.SessionManager;
+import io.peqo.kbahelper.util.SharedPrefsManager;
 import okhttp3.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -76,7 +77,7 @@ public class LoginActivity extends Activity {
             dialog.setMessage("Logger ind...");
             dialog.show();
             String[] credentials = {username, password};
-            new VerifyUserCredentials().execute(credentials);
+            new VerifyUserCredentials(this).execute(credentials);
         } else {
             Toast.makeText(getApplicationContext(), "Forkert input.", Toast.LENGTH_LONG).show();
         }
@@ -84,18 +85,30 @@ public class LoginActivity extends Activity {
 
     private class VerifyUserCredentials extends AsyncTask<String, Void, Boolean> {
 
+        final String URL = "http://207.154.199.94/api/login";
+
+        private LoginActivity activity;
+
+        public VerifyUserCredentials(LoginActivity activity) {
+            this.activity = activity;
+        }
+
         @Override
         protected Boolean doInBackground(String... strings) {
             final String username = strings[0];
             final String password = strings[1];
+            final String token = SharedPrefsManager.getInstance(activity.getApplicationContext()).getToken();
             final ObjectMapper mapper = new ObjectMapper();
 
             Map<String, String> data = new HashMap<>();
             data.put("username", username);
             data.put("password", password);
+            data.put("token", token);
+
+            Log.d(TAG, "Data: " + data);
 
             try {
-                Response response = ApiConnection.open("http://207.154.199.94/api/login")
+                Response response = ApiConnection.open(URL)
                         .syncPostRequest(mapper.writeValueAsString(data));
 
                 if (response != null && response.isSuccessful()) {
