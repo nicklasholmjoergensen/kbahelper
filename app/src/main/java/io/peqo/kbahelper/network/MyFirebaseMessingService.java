@@ -18,7 +18,7 @@ public class MyFirebaseMessingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if(remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Payload: " + remoteMessage.getData().toString());
+            Log.d(TAG, "Payload: " + remoteMessage.getData());
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 sendPushNotification(json);
@@ -33,7 +33,7 @@ public class MyFirebaseMessingService extends FirebaseMessagingService {
             JSONObject data = json.getJSONObject("data");
 
             String title = data.getString("title");
-            String message = data.getString("message");
+            String message = data.getString("body");
 
             MyFirebaseNotificationManager notificationManager = new MyFirebaseNotificationManager(getApplicationContext());
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
