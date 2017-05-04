@@ -97,13 +97,11 @@ public class LoginActivity extends Activity {
         protected Boolean doInBackground(String... strings) {
             final String username = strings[0];
             final String password = strings[1];
-            final String token = SharedPrefsManager.getInstance(activity.getApplicationContext()).getToken();
             final ObjectMapper mapper = new ObjectMapper();
 
             Map<String, String> data = new HashMap<>();
             data.put("username", username);
             data.put("password", password);
-            data.put("token", token);
 
             Log.d(TAG, "Data: " + data);
 
